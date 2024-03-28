@@ -12,6 +12,4 @@ libraries:
   - "dev.jorel:commandapi-bukkit-kotlin:9.3.0"
   - "net.axay:kspigot:1.20.3"
 
-depend:
-  - Skript
-  - CloudNet-Bridge
+depend: [Skript]
