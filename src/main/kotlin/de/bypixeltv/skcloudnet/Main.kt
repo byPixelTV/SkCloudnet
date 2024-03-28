@@ -1,10 +1,10 @@
 package de.bypixeltv.skcloudnet
 
+import ch.njol.skript.Skript
+import ch.njol.skript.SkriptAddon
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
 import net.kyori.adventure.text.minimessage.MiniMessage
-import ch.njol.skript.Skript
-import ch.njol.skript.SkriptAddon
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.IOException
 
@@ -12,13 +12,19 @@ class Main : JavaPlugin() {
 
     private val miniMessages = MiniMessage.miniMessage()
 
-    lateinit var instance: Main
-    lateinit var addon: SkriptAddon
+    var instance: Main? = null
+    var addon: SkriptAddon? = null
 
     @Suppress("Deprecation")
     override fun onEnable() {
-        instance = this
-        addon = Skript.registerAddon(this)
+        this.instance = this
+        this.addon = Skript.registerAddon(this)
+        val localAddon = this.addon
+        try {
+            localAddon?.loadClasses("de.bypixeltv.skcloudnet", "elements")
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
         server.consoleSender.sendMessage(miniMessages.deserialize("<blue>Successfully enabled SkCloudnet v1! <yellow>Good to see you :)</yellow></blue>"))
     }
 
@@ -32,11 +38,11 @@ class Main : JavaPlugin() {
         server.consoleSender.sendMessage(miniMessages.deserialize("<blue>Successfully disabled SkCloudnet v1! <yellow>Goodbye!</yellow></blue>"))
     }
 
-    fun getMainInstance(): Main {
+    fun getMainInstance(): Main? {
         return instance
     }
 
-    fun getAddonInstance(): SkriptAddon {
+    fun getAddonInstance(): SkriptAddon? {
         return addon
     }
 }

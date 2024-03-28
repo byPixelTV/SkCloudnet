@@ -39,6 +39,7 @@ dependencies {
     implementation("eu.cloudnetservice.cloudnet:platform-inject-api:4.0.0-RC9")
     implementation("eu.cloudnetservice.cloudnet:platform-inject-support:4.0.0-RC9")
     implementation("eu.cloudnetservice.cloudnet:common:4.0.0-RC9")
+    implementation("eu.cloudnetservice.cloudnet:node:4.0.0-RC9")
 }
 
 tasks {
