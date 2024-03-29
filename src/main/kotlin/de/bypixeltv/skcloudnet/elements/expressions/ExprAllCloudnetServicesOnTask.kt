@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements
+package de.bypixeltv.skcloudnet.elements.expressions
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -15,14 +15,14 @@ import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
 
-@Name("All Running Services by CloudNet Task")
-@Description("Returns all running CloudNet services by a task")
+@Name("All Cloudnet Services On Task")
+@Description("Returns all running CloudNet services running a specify task")
 @Examples("loop all cloudnet services on task \"Lobby\":\n" + "\tsend \"%loop-value%\"")
 @Since("1.0")
 
 class ExprAllCloudnetServicesOnTask : SimpleExpression<String>() {
 
-    val cnServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
+    private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
@@ -61,7 +61,7 @@ class ExprAllCloudnetServicesOnTask : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "all cloudnet services"
+        return "all cloudnet services on task %string%"
     }
 
 }
