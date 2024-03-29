@@ -11,21 +11,20 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
-import org.bukkit.Bukkit
 import org.bukkit.event.Event
 
 @Name("Stop Service")
-@Description("Stop a CloudNet service by its name.")
-@Examples("stop cloudnet service \"Lobby-1\"")
+@Description("Start a CloudNet service by its name.")
+@Examples("start cloudnet service \"Lobby-1\"")
 @Since("1.0")
 
-class EffStopService : Effect() {
+class EffStartService : Effect() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffStopService::class.java, "stop [cloudnet] service %string%")
+            Skript.registerEffect(EffStartService::class.java, "start [cloudnet] service %string%")
         }
     }
 
@@ -49,7 +48,7 @@ class EffStopService : Effect() {
     override fun execute(event: Event?) {
         val service = serviceExpression?.getSingle(event)
         service?.let {
-            cnServiceProvider.serviceProviderByName(it).stop()
+            cnServiceProvider.serviceProviderByName(it).start()
         }
     }
 }
