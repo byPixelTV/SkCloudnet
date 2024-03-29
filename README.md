@@ -26,26 +26,7 @@
 
 <h2 align="center">🎯 Features</h2>
 
-- Services
- - Expressions
-  - List
-  - List by Task
- - Effects
-  - Start
-  - Startall by Task
-  - Startall
-  - Stop
-  - Stopall
-  - Stopall by Task
-  - Restart
-  - Delete
-  - Command Execute
-
-- Tasks
- - Expressions
-  - List
- - Effects
-  - Create by
+Soon
 
 ###
 
