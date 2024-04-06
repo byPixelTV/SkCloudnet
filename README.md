@@ -22,12 +22,4 @@
   <img width="12" />
 </div>
 
-[![Get on skUnity](https://docs.skunity.com/skunity/library/Docs/Assets/assets/images/buttons/v2/get-the-syntax-black.png)](https://docs.skunity.com/syntax/search/addon:SkCloudnet)
-
-###
-
-<br clear="both">
-
-<h2 align="center">🎯 Our goals</h2>
-
-- Make it possible to interact with CloudNet if you don't know Java or Kotlin
+[![Get on skUnity](https://docs.skunity.com/skunity/library/Docs/Assets/assets/images/buttons/v1/get_on_docs.png)](https://docs.skunity.com/syntax/search/addon:SkCloudnet)
