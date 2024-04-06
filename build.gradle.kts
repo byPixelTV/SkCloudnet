@@ -27,19 +27,19 @@ dependencies {
     implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.3.0")
     implementation("net.axay:kspigot:1.20.3")
 
-    implementation("com.github.SkriptLang:Skript:2.8.3")
+    implementation("com.github.SkriptLang:Skript:2.8.4")
 
 
-    implementation("eu.cloudnetservice.cloudnet:syncproxy:4.0.0-RC9")
-    implementation("eu.cloudnetservice.cloudnet:bridge:4.0.0-RC9")
-    implementation("eu.cloudnetservice.cloudnet:driver:4.0.0-RC9")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-runtime:4.0.0-RC9")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-processor:4.0.0-RC9")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-loader:4.0.0-RC9")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-api:4.0.0-RC9")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-support:4.0.0-RC9")
-    implementation("eu.cloudnetservice.cloudnet:common:4.0.0-RC9")
-    implementation("eu.cloudnetservice.cloudnet:node:4.0.0-RC9")
+    implementation("eu.cloudnetservice.cloudnet:syncproxy:4.0.0-RC10")
+    implementation("eu.cloudnetservice.cloudnet:bridge:4.0.0-RC10")
+    implementation("eu.cloudnetservice.cloudnet:driver:4.0.0-RC10")
+    implementation("eu.cloudnetservice.cloudnet:platform-inject-runtime:4.0.0-RC10")
+    implementation("eu.cloudnetservice.cloudnet:platform-inject-processor:4.0.0-RC10")
+    implementation("eu.cloudnetservice.cloudnet:platform-inject-loader:4.0.0-RC10")
+    implementation("eu.cloudnetservice.cloudnet:platform-inject-api:4.0.0-RC10")
+    implementation("eu.cloudnetservice.cloudnet:platform-inject-support:4.0.0-RC10")
+    implementation("eu.cloudnetservice.cloudnet:common:4.0.0-RC10")
+    implementation("eu.cloudnetservice.cloudnet:node:4.0.0-RC10")
 }
 
 tasks {

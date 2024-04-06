@@ -12,6 +12,12 @@ import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
+import eu.cloudnetservice.driver.registry.ServiceRegistry
+import eu.cloudnetservice.modules.bridge.player.CloudPlayer
+import eu.cloudnetservice.modules.bridge.player.NetworkServiceInfo
+import eu.cloudnetservice.modules.bridge.player.PlayerManager
+import org.apache.commons.lang.ObjectUtils.Null
+import org.bukkit.entity.Player
 import org.bukkit.event.Event
 
 
@@ -20,19 +26,20 @@ import org.bukkit.event.Event
 @Examples("loop all cloudnet services on task \"Lobby\":\n" + "\tsend \"%loop-value%\"")
 @Since("1.0")
 
-class ExprAllCloudnetServicesOnTask : SimpleExpression<String>() {
+class ExprGetCloudnetPlayerService : SimpleExpression<String>() {
 
-    private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
+    private val serviceRegistry: ServiceRegistry = InjectionLayer.ext().instance(ServiceRegistry::class.java)
+    private val playerManager: PlayerManager = serviceRegistry.firstProvider(PlayerManager::class.java)
 
     companion object{
         init {
             Skript.registerExpression(
-                ExprAllCloudnetServicesOnTask::class.java, String::class.java,
-                ExpressionType.SIMPLE, "[(all [[of] the]|the)] [running] cloudnet services on [the] [task] %string%")
+                ExprGetCloudnetPlayerService::class.java, String::class.java,
+                ExpressionType.SIMPLE, "cloudnet service of [the player] %player%")
         }
     }
 
-    private var task: Expression<String>? = null
+    private var player: Expression<Player>? = null
 
     override fun isSingle(): Boolean {
         return false
@@ -45,15 +52,16 @@ class ExprAllCloudnetServicesOnTask : SimpleExpression<String>() {
         isDelayed: Kleenean?,
         parseResult: SkriptParser.ParseResult?
     ): Boolean {
-        this.task = exprs[0] as Expression<String>?
+        this.player = exprs[0] as Expression<Player>?
         return true
     }
-    override fun get(e: Event?): Array<String>? {
-        val task = this.task?.getSingle(e)
-        if (task != null) {
-            return cnServiceProvider.servicesByTask(task).map { it.name() }.toTypedArray()
+    override fun get(e: Event?): Array<String?> {
+        val player = this.player?.getSingle(e)
+        if (player != null) {
+            val serviceInfo = playerManager.onlinePlayer(player.uniqueId)?.connectedService()?.serverName()
+            return arrayOf(serviceInfo.toString())
         }
-        return null
+        return arrayOfNulls(0)
     }
 
     override fun getReturnType(): Class<out String> {
@@ -61,7 +69,7 @@ class ExprAllCloudnetServicesOnTask : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "all cloudnet services on task %string%"
+        return "cloudnet service of ${player?.getSingle(e)}"
     }
 
 }

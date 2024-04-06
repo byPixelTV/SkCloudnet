@@ -14,41 +14,36 @@ import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
 @Name("Stop Service")
-@Description("Start a CloudNet service by its name.")
-@Examples("start cloudnet service \"Lobby-1\"")
+@Description("Stop all cloudnet services.")
+@Examples("stop all cloudnet services")
 @Since("1.0")
 
-class EffStartService : Effect() {
+class EffStopAllServices : Effect() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffStartService::class.java, "start [cloudnet] service %string%")
+            Skript.registerEffect(EffStopAllServices::class.java, "stop all [cloudnet] services")
         }
     }
 
-    private var serviceExpression: Expression<String>? = null
-
-    @Suppress("UNCHECKED_CAST")
     override fun init(
         expressions: Array<Expression<*>>,
         matchedPattern: Int,
         isDelayed: Kleenean,
         parser: SkriptParser.ParseResult
     ): Boolean {
-        this.serviceExpression = expressions[0] as Expression<String>
         return true
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "stop cloudnet service ${serviceExpression?.getSingle(event)}"
+        return "stop all cloudnet services"
     }
 
     override fun execute(event: Event?) {
-        val service = serviceExpression?.getSingle(event)
-        service?.let {
-            cnServiceProvider.serviceProviderByName(it).start()
+        for (service in cnServiceProvider.services()) {
+            cnServiceProvider.serviceProviderByName(service.name()).stop()
         }
     }
 }
