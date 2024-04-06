@@ -2,7 +2,6 @@ package de.bypixeltv.skcloudnet
 
 import ch.njol.skript.Skript
 import ch.njol.skript.SkriptAddon
-import de.bypixeltv.skcloudnet.command.InfoCommands
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -25,7 +24,6 @@ class Main : JavaPlugin() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        InfoCommands()
         server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>Enabling SkCloudnet v1...</color>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
