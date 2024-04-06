@@ -2,20 +2,30 @@ package de.bypixeltv.skcloudnet
 
 import ch.njol.skript.Skript
 import ch.njol.skript.SkriptAddon
+import de.bypixeltv.skcloudnet.utils.GetVersion
+import de.bypixeltv.skcloudnet.utils.UpdateChecker
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
+import net.axay.kspigot.event.listen
+import net.axay.kspigot.main.KSpigot
 import net.kyori.adventure.text.minimessage.MiniMessage
-import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.event.player.PlayerJoinEvent
 import java.io.IOException
 
-class Main : JavaPlugin() {
+class Main : KSpigot() {
 
     private val miniMessages = MiniMessage.miniMessage()
 
     var instance: Main? = null
     private var addon: SkriptAddon? = null
 
-    override fun onEnable() {
+    companion object {
+        lateinit var INSTANCE: Main
+    }
+
+    @Suppress("deprecation")
+    override fun startup() {
+        INSTANCE = this
         this.instance = this
         this.addon = Skript.registerAddon(this)
         val localAddon = this.addon
@@ -24,6 +34,8 @@ class Main : JavaPlugin() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+
+
         server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>Enabling SkCloudnet v1...</color>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
@@ -37,14 +49,40 @@ class Main : JavaPlugin() {
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(miniMessages.deserialize("<aqua>Successfully enabled SkCloudnet v1!</aqua>"))
+
+
+        val githubVersion = GetVersion().getLatestGithubAddonVersion()
+        if (githubVersion != null) {
+            if (githubVersion != this.description.version) {
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>${getPluginVersion()}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n\n<color:#43fa00>Download the latest version here:</color> <blue>https://github.com/byPixelTV/SkCloudnet/releases</blue> <aqua>"))
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(" ")
+            } else {
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>You're on the latest version of SkCloudnet!</color> <aqua>Version <yellow>${getPluginVersion()}</yellow></aqua>"))
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(" ")
+            }
+        } else {
+            server.consoleSender.sendMessage(" ")
+            server.consoleSender.sendMessage(" ")
+            server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>Unable to fetch the latest version from Github!</color> <aqua>Are you rate limited?</aqua>"))
+            server.consoleSender.sendMessage(" ")
+            server.consoleSender.sendMessage(" ")
+        }
+
+        UpdateChecker
     }
 
-    override fun onLoad() {
+    override fun load() {
         server.consoleSender.sendMessage(miniMessages.deserialize("<blue>Loading SkCloudnet...</blue>"))
         CommandAPI.onLoad(CommandAPIBukkitConfig(this).silentLogs(true).verboseOutput(true))
     }
 
-    override fun onDisable() {
+    override fun shutdown() {
         CommandAPI.onDisable()
         server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>Disabling SkCloudnet v1...</color>"))
         server.consoleSender.sendMessage(" ")
@@ -67,5 +105,10 @@ class Main : JavaPlugin() {
 
     fun getAddonInstance(): SkriptAddon? {
         return addon
+    }
+
+    @Suppress("deprecation")
+    fun getPluginVersion(): String {
+        return this.description.version
     }
 }

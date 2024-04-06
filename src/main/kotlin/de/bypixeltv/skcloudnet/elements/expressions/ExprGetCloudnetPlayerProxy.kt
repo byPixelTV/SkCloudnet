@@ -21,9 +21,9 @@ import org.bukkit.entity.Player
 import org.bukkit.event.Event
 
 
-@Name("All Cloudnet Services On Task")
-@Description("Returns all running CloudNet services running a specify task")
-@Examples("loop all cloudnet services on task \"Lobby\":\n" + "\tsend \"%loop-value%\"")
+@Name("CloudNet Proxy of Player")
+@Description("Returns the CloudNet proxy of a player.")
+@Examples("send cloudnet proxy of \"byPixelTV\" parsed as player")
 @Since("1.0")
 
 class ExprGetCloudnetPlayerProxy : SimpleExpression<String>() {
@@ -42,7 +42,7 @@ class ExprGetCloudnetPlayerProxy : SimpleExpression<String>() {
     private var player: Expression<Player>? = null
 
     override fun isSingle(): Boolean {
-        return false
+        return true
     }
 
     @Suppress("UNCHECKED_CAST")

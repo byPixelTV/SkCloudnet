@@ -11,19 +11,15 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import eu.cloudnetservice.driver.registry.ServiceRegistry
-import eu.cloudnetservice.modules.bridge.player.CloudPlayer
-import eu.cloudnetservice.modules.bridge.player.NetworkServiceInfo
 import eu.cloudnetservice.modules.bridge.player.PlayerManager
-import org.apache.commons.lang.ObjectUtils.Null
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 
 
-@Name("All Cloudnet Services On Task")
-@Description("Returns all running CloudNet services running a specify task")
-@Examples("loop all cloudnet services on task \"Lobby\":\n" + "\tsend \"%loop-value%\"")
+@Name("CloudNet Service of Player")
+@Description("Returns the CloudNet service of a player.")
+@Examples("send cloudnet service of \"byPixelTV\" parsed as player")
 @Since("1.0")
 
 class ExprGetCloudnetPlayerService : SimpleExpression<String>() {
@@ -42,7 +38,7 @@ class ExprGetCloudnetPlayerService : SimpleExpression<String>() {
     private var player: Expression<Player>? = null
 
     override fun isSingle(): Boolean {
-        return false
+        return true
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -55,11 +51,12 @@ class ExprGetCloudnetPlayerService : SimpleExpression<String>() {
         this.player = exprs[0] as Expression<Player>?
         return true
     }
+
     override fun get(e: Event?): Array<String?> {
         val player = this.player?.getSingle(e)
         if (player != null) {
             val serviceInfo = playerManager.onlinePlayer(player.uniqueId)?.connectedService()?.serverName()
-            return arrayOf(serviceInfo.toString())
+            return arrayOf(serviceInfo)
         }
         return arrayOfNulls(0)
     }
