@@ -22,11 +22,7 @@
   <img width="12" />
 </div>
 
-###
-
-<h2 align="center">🎯 Features</h2>
-
-Soon
+[![Get on skUnity](https://docs.skunity.com/skunity/library/Docs/Assets/assets/images/buttons/v2/get-the-syntax-black.png)](https://docs.skunity.com/syntax/search/addon:SkCloudnet)
 
 ###
 
