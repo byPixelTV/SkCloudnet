@@ -2,6 +2,7 @@ package de.bypixeltv.skcloudnet
 
 import ch.njol.skript.Skript
 import ch.njol.skript.SkriptAddon
+import de.bypixeltv.skcloudnet.commands.SkCloudnetCommands
 import de.bypixeltv.skcloudnet.utils.GetVersion
 import de.bypixeltv.skcloudnet.utils.UpdateChecker
 import dev.jorel.commandapi.CommandAPI
@@ -23,8 +24,10 @@ class Main : KSpigot() {
         lateinit var INSTANCE: Main
     }
 
-    @Suppress("deprecation")
+    @Suppress("DEPRECATION")
     override fun startup() {
+        saveDefaultConfig()
+
         INSTANCE = this
         this.instance = this
         this.addon = Skript.registerAddon(this)
@@ -34,7 +37,6 @@ class Main : KSpigot() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
 
         server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>Enabling SkCloudnet v1...</color>"))
         server.consoleSender.sendMessage(" ")
@@ -51,7 +53,7 @@ class Main : KSpigot() {
         server.consoleSender.sendMessage(miniMessages.deserialize("<aqua>Successfully enabled SkCloudnet v1!</aqua>"))
 
 
-        val githubVersion = GetVersion().getLatestGithubAddonVersion()
+        val githubVersion = GetVersion().getLatestAddonVersion()
         if (githubVersion != null) {
             if (githubVersion != this.description.version) {
                 server.consoleSender.sendMessage(" ")
@@ -75,11 +77,14 @@ class Main : KSpigot() {
         }
 
         UpdateChecker
+
+        val metrics: Metrics = Metrics(this, 21526)
     }
 
     override fun load() {
         server.consoleSender.sendMessage(miniMessages.deserialize("<blue>Loading SkCloudnet...</blue>"))
         CommandAPI.onLoad(CommandAPIBukkitConfig(this).silentLogs(true).verboseOutput(true))
+        SkCloudnetCommands()
     }
 
     override fun shutdown() {
@@ -107,7 +112,7 @@ class Main : KSpigot() {
         return addon
     }
 
-    @Suppress("deprecation")
+    @Suppress("DEPRECATION")
     fun getPluginVersion(): String {
         return this.description.version
     }

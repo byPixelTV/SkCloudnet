@@ -43,6 +43,17 @@ dependencies {
     implementation("org.json:json:20231013")
 }
 
+sourceSets {
+    getByName("main") {
+        java {
+            srcDir("src/main/java")
+        }
+        kotlin {
+            srcDir("src/main/kotlin")
+        }
+    }
+}
+
 tasks {
     assemble {
         dependsOn(reobfJar)
@@ -50,6 +61,7 @@ tasks {
     compileJava {
         options.encoding = "UTF-8"
         options.release.set(17)
+        options.compilerArgs.add("-Xlint:deprecation")
     }
     compileKotlin {
         kotlinOptions.jvmTarget = "17"

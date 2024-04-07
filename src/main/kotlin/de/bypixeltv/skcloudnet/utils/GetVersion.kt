@@ -1,5 +1,7 @@
 package de.bypixeltv.skcloudnet.utils
 
+import ch.njol.skript.Skript
+import org.bukkit.Bukkit
 import org.json.JSONObject
 
 import java.net.URI
@@ -23,7 +25,12 @@ class GetVersion() {
         return null
     }
 
-    fun getLatestGithubAddonVersion(): String? {
+    @Suppress("DEPRECATION")
+    fun getSkriptVersion(): String {
+        return Skript.getInstance().description.version
+    }
+
+    fun getLatestAddonVersion(): String? {
         val httpClient = HttpClient.newHttpClient()
         val request = HttpRequest.newBuilder()
             .uri(URI.create("https://api.github.com/repos/byPixelTV/SkCloudnet/releases/latest")).build()

@@ -1,0 +1,2 @@
+# whether players with the permission 'skcloudnet.admin.version' should be notified if there is an update.
+update-checker: true
