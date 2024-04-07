@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -10,22 +10,21 @@ import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.ServiceTaskProvider
-import eu.cloudnetservice.driver.service.ServiceConfiguration
+import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-@Name("Create service by Task")
-@Description("Create a CloudNet service by a task")
-@Examples("create a cloudnet service by task \"Lobby\"")
+@Name("Stop all services on task")
+@Description("Stop all cloudnet services on a task.")
+@Examples("stop all cloudnet services on task \"Lobby-1\"")
 @Since("1.0")
 
-class EffCreateCloudnetService : Effect() {
+class EffStopAllServicesOnTask : Effect() {
 
-    private val serviceTaskProvider: ServiceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
+    private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffCreateCloudnetService::class.java, "create [a] [cloudnet] service by [the] [task] %string%")
+            Skript.registerEffect(EffStopAllServicesOnTask::class.java, "stop all [cloudnet] services on [the] [task] %string%")
         }
     }
 
@@ -43,12 +42,13 @@ class EffCreateCloudnetService : Effect() {
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "create cloudnet service by task ${taskExpression.toString()}"
+        return "stop all cloudnet services on task ${taskExpression?.getSingle(event)}"
     }
 
     override fun execute(event: Event?) {
-        val taskExpr = taskExpression?.getSingle(event)
-        val serviceTask = serviceTaskProvider.serviceTask(taskExpr.toString())
-        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).build().createNewService() }
+        val task = taskExpression?.getSingle(event)
+        for (service in cnServiceProvider.servicesByTask(task.toString())) {
+            cnServiceProvider.serviceProviderByName(service.name()).stop()
+        }
     }
 }

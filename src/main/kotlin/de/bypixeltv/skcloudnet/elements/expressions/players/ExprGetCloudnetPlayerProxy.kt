@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.expressions
+package de.bypixeltv.skcloudnet.elements.expressions.players
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -17,12 +17,12 @@ import org.bukkit.entity.Player
 import org.bukkit.event.Event
 
 
-@Name("CloudNet Service of Player")
-@Description("Returns the CloudNet service of a player.")
-@Examples("send cloudnet service of \"byPixelTV\" parsed as player")
+@Name("CloudNet Proxy of Player")
+@Description("Returns the CloudNet proxy of a player.")
+@Examples("send cloudnet proxy of \"byPixelTV\" parsed as player")
 @Since("1.0")
 
-class ExprGetCloudnetPlayerService : SimpleExpression<String>() {
+class ExprGetCloudnetPlayerProxy : SimpleExpression<String>() {
 
     private val serviceRegistry: ServiceRegistry = InjectionLayer.ext().instance(ServiceRegistry::class.java)
     private val playerManager: PlayerManager = serviceRegistry.firstProvider(PlayerManager::class.java)
@@ -30,8 +30,8 @@ class ExprGetCloudnetPlayerService : SimpleExpression<String>() {
     companion object{
         init {
             Skript.registerExpression(
-                ExprGetCloudnetPlayerService::class.java, String::class.java,
-                ExpressionType.SIMPLE, "cloudnet service of [the player] %player%")
+                ExprGetCloudnetPlayerProxy::class.java, String::class.java,
+                ExpressionType.SIMPLE, "cloudnet proxy of [the player] %player%")
         }
     }
 
@@ -51,12 +51,11 @@ class ExprGetCloudnetPlayerService : SimpleExpression<String>() {
         this.player = exprs[0] as Expression<Player>?
         return true
     }
-
     override fun get(e: Event?): Array<String?> {
         val player = this.player?.getSingle(e)
         if (player != null) {
-            val serviceInfo = playerManager.onlinePlayer(player.uniqueId)?.connectedService()?.serverName()
-            return arrayOf(serviceInfo)
+            val serviceInfo = playerManager.onlinePlayer(player.uniqueId)?.loginService()?.serverName()
+            return arrayOf(serviceInfo.toString())
         }
         return arrayOfNulls(0)
     }
@@ -66,7 +65,7 @@ class ExprGetCloudnetPlayerService : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "cloudnet service of ${player?.getSingle(e)}"
+        return "cloudnet proxy of ${player?.getSingle(e)}"
     }
 
 }

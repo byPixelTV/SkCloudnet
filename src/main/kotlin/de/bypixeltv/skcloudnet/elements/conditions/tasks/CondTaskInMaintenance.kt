@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.expressions
+package de.bypixeltv.skcloudnet.elements.conditions.tasks
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -10,7 +10,6 @@ import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import eu.cloudnetservice.driver.provider.ServiceTaskProvider
 import org.bukkit.event.Event
 
@@ -45,8 +44,15 @@ class CondTaskInMaintenance : Condition() {
     override fun check(e: Event?): Boolean {
         val task = task?.getSingle(e)
         val serviceTask = serviceTaskProvider.serviceTask(task.toString())
-        if (serviceTask == null) return isNegated
-        return if (serviceTask.maintenance() == false) isNegated else !isNegated
+        if (serviceTask == null) {
+            return isNegated
+        } else {
+            if (serviceTask.maintenance() == true) {
+                return isNegated
+            } else {
+                return !isNegated
+            }
+        }
     }
 
     override fun toString(e: Event?, debug: Boolean): String {

@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -13,18 +13,18 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-@Name("Stop Service")
-@Description("Stop all cloudnet services.")
-@Examples("stop all cloudnet services")
+@Name("Start Service")
+@Description("Start all cloudnet services.")
+@Examples("start all cloudnet services")
 @Since("1.0")
 
-class EffStopAllServices : Effect() {
+class EffStartAllServices : Effect() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffStopAllServices::class.java, "stop all [cloudnet] services")
+            Skript.registerEffect(EffStartAllServices::class.java, "start all [cloudnet] services")
         }
     }
 
@@ -38,12 +38,12 @@ class EffStopAllServices : Effect() {
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "stop all cloudnet services"
+        return "start all cloudnet services"
     }
 
     override fun execute(event: Event?) {
         for (service in cnServiceProvider.services()) {
-            cnServiceProvider.serviceProviderByName(service.name()).stop()
+            cnServiceProvider.serviceProviderByName(service.name()).start()
         }
     }
 }

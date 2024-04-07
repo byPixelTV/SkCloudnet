@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -10,21 +10,22 @@ import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.CloudServiceProvider
+import eu.cloudnetservice.driver.provider.ServiceTaskProvider
+import eu.cloudnetservice.driver.service.ServiceConfiguration
 import org.bukkit.event.Event
 
-@Name("Restart all services on task")
-@Description("Restart all cloudnet services on a task.")
-@Examples("restart all cloudnet services on task \"Lobby-1\"")
+@Name("Create service by Task")
+@Description("Create a CloudNet service by a task")
+@Examples("create a cloudnet service by task \"Lobby\"")
 @Since("1.0")
 
-class RestartAllServicesOnTask : Effect() {
+class EffCreateCloudnetService : Effect() {
 
-    private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
+    private val serviceTaskProvider: ServiceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(RestartAllServicesOnTask::class.java, "restart all [cloudnet] services on [the] [task] %string%")
+            Skript.registerEffect(EffCreateCloudnetService::class.java, "create [a] [cloudnet] service by [the] [task] %string%")
         }
     }
 
@@ -42,13 +43,12 @@ class RestartAllServicesOnTask : Effect() {
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "restart all cloudnet services on task ${taskExpression?.getSingle(event)}"
+        return "create cloudnet service by task ${taskExpression.toString()}"
     }
 
     override fun execute(event: Event?) {
-        val task = taskExpression?.getSingle(event)
-        for (service in cnServiceProvider.servicesByTask(task.toString())) {
-            cnServiceProvider.serviceProviderByName(service.name()).restart()
-        }
+        val taskExpr = taskExpression?.getSingle(event)
+        val serviceTask = serviceTaskProvider.serviceTask(taskExpr.toString())
+        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).build().createNewService() }
     }
 }

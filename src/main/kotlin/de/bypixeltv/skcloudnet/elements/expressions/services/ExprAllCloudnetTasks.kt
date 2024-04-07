@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.expressions
+package de.bypixeltv.skcloudnet.elements.expressions.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description

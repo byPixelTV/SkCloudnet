@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.expressions
+package de.bypixeltv.skcloudnet.elements.expressions.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -15,45 +15,38 @@ import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
 
-@Name("All Cloudnet Services On Task")
-@Description("Returns all running CloudNet services running a specify task")
-@Examples("loop all cloudnet services on task \"Lobby\":\n" + "\tsend \"%loop-value%\"")
+@Name("All Running Services")
+@Description("Returns all running CloudNet services")
+@Examples("loop all cloudnet services:\n" + "\tsend \"%loop-value%\"")
 @Since("1.0")
 
-class ExprAllServicesOnTask : SimpleExpression<String>() {
+class ExprAllCloudnetServices : SimpleExpression<String>() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
             Skript.registerExpression(
-                ExprAllServicesOnTask::class.java, String::class.java,
-                ExpressionType.SIMPLE, "[(all [[of] the]|the)] [running] cloudnet services on [the] [task] %string%")
+                ExprAllCloudnetServices::class.java, String::class.java,
+                ExpressionType.SIMPLE, "[(all [[of] the]|the)] [running] cloudnet services")
         }
     }
-
-    private var task: Expression<String>? = null
 
     override fun isSingle(): Boolean {
         return false
     }
 
-    @Suppress("UNCHECKED_CAST")
     override fun init(
-        exprs: Array<Expression<*>>,
+        exprs: Array<Expression<*>?>?,
         matchedPattern: Int,
         isDelayed: Kleenean?,
         parseResult: SkriptParser.ParseResult?
     ): Boolean {
-        this.task = exprs[0] as Expression<String>?
         return true
     }
-    override fun get(e: Event?): Array<String>? {
-        val task = this.task?.getSingle(e)
-        if (task != null) {
-            return cnServiceProvider.servicesByTask(task).map { it.name() }.toTypedArray()
-        }
-        return null
+
+    override fun get(e: Event?): Array<String?> {
+        return cnServiceProvider.services().map { it.name() }.toTypedArray()
     }
 
     override fun getReturnType(): Class<out String> {
@@ -61,7 +54,7 @@ class ExprAllServicesOnTask : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "all cloudnet services on task %string%"
+        return "all cloudnet services"
     }
 
 }

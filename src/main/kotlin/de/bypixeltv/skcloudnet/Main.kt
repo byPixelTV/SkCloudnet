@@ -38,7 +38,7 @@ class Main : KSpigot() {
             e.printStackTrace()
         }
 
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>Enabling SkCloudnet v1...</color>"))
+        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>Enabling SkCloudnet ${this.description.version}...</color>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00> _____  _     _____  _                    _               _  </color>"))
@@ -50,7 +50,7 @@ class Main : KSpigot() {
         server.consoleSender.sendMessage(miniMessages.deserialize("<yellow>Made by byPixelTV</yellow>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(miniMessages.deserialize("<aqua>Successfully enabled SkCloudnet v1!</aqua>"))
+        server.consoleSender.sendMessage(miniMessages.deserialize("<aqua>Successfully enabled SkCloudnet ${this.description.version}!</aqua>"))
 
 
         val githubVersion = GetVersion().getLatestAddonVersion()
@@ -89,7 +89,7 @@ class Main : KSpigot() {
 
     override fun shutdown() {
         CommandAPI.onDisable()
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>Disabling SkCloudnet v1...</color>"))
+        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>Disabling SkCloudnet ${this.description.version}...</color>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000> _____  _     _____  _                    _               _  </color>"))
@@ -101,7 +101,7 @@ class Main : KSpigot() {
         server.consoleSender.sendMessage(miniMessages.deserialize("<yellow>Made by byPixelTV</yellow>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(miniMessages.deserialize("<aqua>Successfully disabled SkCloudnet v1!</aqua>"))
+        server.consoleSender.sendMessage(miniMessages.deserialize("<aqua>Successfully disabled SkCloudnet ${this.description.version}!</aqua>"))
     }
 
     fun getMainInstance(): Main? {
