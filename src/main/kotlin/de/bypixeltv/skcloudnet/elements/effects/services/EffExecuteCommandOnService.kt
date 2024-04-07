@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -13,21 +13,22 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-@Name("Restart Service")
-@Description("Restart a CloudNet service by its name.")
-@Examples("restart cloudnet service \"Lobby-1\"")
+@Name("Execute command on server")
+@Description("Execute a command on another CloudNet service.")
+@Examples("execute command \"say Hi\" on service \"Lobby-1\"")
 @Since("1.0")
 
-class EffRestartService : Effect() {
+class EffExecuteCommandOnService : Effect() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffRestartService::class.java, "restart [cloudnet] service %string%")
+            Skript.registerEffect(EffExecuteCommandOnService::class.java, "execute [cloudnet] command %string% on [cloudnet] service %string%")
         }
     }
 
+    private var commandExpression: Expression<String>? = null
     private var serviceExpression: Expression<String>? = null
 
     @Suppress("UNCHECKED_CAST")
@@ -37,18 +38,20 @@ class EffRestartService : Effect() {
         isDelayed: Kleenean,
         parser: SkriptParser.ParseResult
     ): Boolean {
-        this.serviceExpression = expressions[0] as Expression<String>
+        this.commandExpression = expressions[0] as Expression<String>
+        this.serviceExpression = expressions[1] as Expression<String>
         return true
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "restart cloudnet service ${serviceExpression?.getSingle(event)}"
+        return "execute cloudnet command ${commandExpression?.getSingle(event)} on service ${serviceExpression?.getSingle(event)}"
     }
 
     override fun execute(event: Event?) {
         val service = serviceExpression?.getSingle(event)
+        val command = commandExpression?.getSingle(event)
         service?.let {
-            cnServiceProvider.serviceProviderByName(it).restart()
+            cnServiceProvider.serviceProviderByName(it).runCommandAsync(command.toString())
         }
     }
 }

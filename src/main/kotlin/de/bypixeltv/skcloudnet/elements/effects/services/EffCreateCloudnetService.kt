@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -14,18 +14,18 @@ import eu.cloudnetservice.driver.provider.ServiceTaskProvider
 import eu.cloudnetservice.driver.service.ServiceConfiguration
 import org.bukkit.event.Event
 
-@Name("Create started service by Task")
-@Description("Create a started CloudNet service by a task")
-@Examples("create start cloudnet service by task \"Lobby\"")
+@Name("Create service by Task")
+@Description("Create a CloudNet service by a task")
+@Examples("create a cloudnet service by task \"Lobby\"")
 @Since("1.0")
 
-class EffCreateStartedCloudnetService : Effect() {
+class EffCreateCloudnetService : Effect() {
 
     private val serviceTaskProvider: ServiceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffCreateStartedCloudnetService::class.java, "create [a] started [cloudnet] service by [the] [task] %string%")
+            Skript.registerEffect(EffCreateCloudnetService::class.java, "create [a] [cloudnet] service by [the] [task] %string%")
         }
     }
 
@@ -43,13 +43,12 @@ class EffCreateStartedCloudnetService : Effect() {
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "create started cloudnet service by task ${taskExpression.toString()}"
+        return "create cloudnet service by task ${taskExpression.toString()}"
     }
 
     override fun execute(event: Event?) {
         val taskExpr = taskExpression?.getSingle(event)
         val serviceTask = serviceTaskProvider.serviceTask(taskExpr.toString())
-        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).build().createNewService() }
-        serviceInfoSnapshot?.serviceInfo()?.provider()?.start()
+        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).build().createNewServiceAsync() }
     }
 }

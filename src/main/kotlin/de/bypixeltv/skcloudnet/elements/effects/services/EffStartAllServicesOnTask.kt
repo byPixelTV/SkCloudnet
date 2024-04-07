@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -13,37 +13,42 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-@Name("Start Service")
-@Description("Start all cloudnet services.")
-@Examples("start all cloudnet services")
+@Name("Start all services on task")
+@Description("Start all cloudnet services on a task.")
+@Examples("start all cloudnet services on task \"Lobby\"")
 @Since("1.0")
 
-class EffStartAllServices : Effect() {
+class EffStartAllServicesOnTask : Effect() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffStartAllServices::class.java, "start all [cloudnet] services")
+            Skript.registerEffect(EffStartAllServicesOnTask::class.java, "start all [cloudnet] services on [the] [task] %string%")
         }
     }
 
+    private var taskExpression: Expression<String>? = null
+
+    @Suppress("UNCHECKED_CAST")
     override fun init(
         expressions: Array<Expression<*>>,
         matchedPattern: Int,
         isDelayed: Kleenean,
         parser: SkriptParser.ParseResult
     ): Boolean {
+        this.taskExpression = expressions[0] as Expression<String>
         return true
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "start all cloudnet services"
+        return "start all cloudnet services on task ${taskExpression?.getSingle(event)}"
     }
 
     override fun execute(event: Event?) {
-        for (service in cnServiceProvider.services()) {
-            cnServiceProvider.serviceProviderByName(service.name()).start()
+        val task = taskExpression?.getSingle(event)
+        for (service in cnServiceProvider.servicesByTask(task.toString())) {
+            cnServiceProvider.serviceProviderByName(service.name()).startAsync()
         }
     }
 }

@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -13,22 +13,22 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-@Name("Execute command on all services")
-@Description("Execute a command on all CloudNet service.")
-@Examples("execute cloudnet command \"say Hi\" on all cloudnet services")
+@Name("Stop Service")
+@Description("Stop a CloudNet service by its name.")
+@Examples("stop cloudnet service \"Lobby-1\"")
 @Since("1.0")
 
-class EffExecuteCommandOnAllServices : Effect() {
+class EffStopService : Effect() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffExecuteCommandOnAllServices::class.java, "execute [cloudnet] command %string% on all services")
+            Skript.registerEffect(EffStopService::class.java, "stop [cloudnet] service %string%")
         }
     }
 
-    private var commandExpression: Expression<String>? = null
+    private var serviceExpression: Expression<String>? = null
 
     @Suppress("UNCHECKED_CAST")
     override fun init(
@@ -37,18 +37,18 @@ class EffExecuteCommandOnAllServices : Effect() {
         isDelayed: Kleenean,
         parser: SkriptParser.ParseResult
     ): Boolean {
-        this.commandExpression = expressions[0] as Expression<String>
+        this.serviceExpression = expressions[0] as Expression<String>
         return true
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "execute cloudnet command ${commandExpression?.getSingle(event)} on all services"
+        return "stop cloudnet service ${serviceExpression?.getSingle(event)}"
     }
 
     override fun execute(event: Event?) {
-        val command = commandExpression?.getSingle(event)
-        for (service in cnServiceProvider.services()) {
-            cnServiceProvider.serviceProviderByName(service.name()).runCommand(command.toString())
+        val service = serviceExpression?.getSingle(event)
+        service?.let {
+            cnServiceProvider.serviceProviderByName(it).stopAsync()
         }
     }
 }

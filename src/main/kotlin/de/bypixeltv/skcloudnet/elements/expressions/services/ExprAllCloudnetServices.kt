@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.expressions
+package de.bypixeltv.skcloudnet.elements.expressions.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -16,19 +16,19 @@ import org.bukkit.event.Event
 
 
 @Name("All Running Services")
-@Description("Returns all CloudNet tasks")
-@Examples("loop all cloudnet tasks:\n" + "\tsend \"%loop-value%\"")
+@Description("Returns all running CloudNet services")
+@Examples("loop all cloudnet services:\n" + "\tsend \"%loop-value%\"")
 @Since("1.0")
 
-class ExprAllCloudnetTasks : SimpleExpression<String>() {
+class ExprAllCloudnetServices : SimpleExpression<String>() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
             Skript.registerExpression(
-                ExprAllCloudnetTasks::class.java, String::class.java,
-                ExpressionType.SIMPLE, "[(all [[of] the]|the)] cloudnet tasks")
+                ExprAllCloudnetServices::class.java, String::class.java,
+                ExpressionType.SIMPLE, "[(all [[of] the]|the)] [running] cloudnet services")
         }
     }
 
@@ -46,9 +46,7 @@ class ExprAllCloudnetTasks : SimpleExpression<String>() {
     }
 
     override fun get(e: Event?): Array<String?> {
-        val services = cnServiceProvider.services().map { it.name().split("-")[0] }
-        val uniqueServices = LinkedHashSet(services)
-        return uniqueServices.toTypedArray()
+        return cnServiceProvider.services().map { it.name() }.toTypedArray()
     }
 
     override fun getReturnType(): Class<out String> {
@@ -56,7 +54,7 @@ class ExprAllCloudnetTasks : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "all cloudnet tasks"
+        return "all cloudnet services"
     }
 
 }

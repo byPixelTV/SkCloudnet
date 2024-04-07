@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.expressions
+package de.bypixeltv.skcloudnet.elements.expressions.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -16,48 +16,39 @@ import eu.cloudnetservice.driver.provider.ServiceTaskProvider
 import org.bukkit.event.Event
 
 
-@Name("MinServiceCount of a Task")
-@Description("Returns the minimum service count of a CloudNet task")
-@Examples("send minservicecount of \"Lobby\"")
-@Since("1.1")
+@Name("All Running Services")
+@Description("Returns all CloudNet tasks")
+@Examples("loop all cloudnet tasks:\n" + "\tsend \"%loop-value%\"")
+@Since("1.0")
 
-class ExprMinServiceCount : SimpleExpression<String>() {
+class ExprAllCloudnetTasks : SimpleExpression<String>() {
 
     val serviceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
 
     companion object{
         init {
             Skript.registerExpression(
-                ExprMinServiceCount::class.java, String::class.java,
-                ExpressionType.SIMPLE, "minservicecount of [the] [cloudnet] task %string%")
+                ExprAllCloudnetTasks::class.java, String::class.java,
+                ExpressionType.SIMPLE, "[(all [[of] the]|the)] cloudnet tasks")
         }
     }
 
-    private var task: Expression<String>? = null
-
     override fun isSingle(): Boolean {
-        return true
+        return false
     }
 
-    @Suppress("UNCHECKED_CAST")
     override fun init(
-        exprs: Array<Expression<*>>,
+        exprs: Array<Expression<*>?>?,
         matchedPattern: Int,
         isDelayed: Kleenean?,
         parseResult: SkriptParser.ParseResult?
     ): Boolean {
-        this.task = exprs[0] as Expression<String>?
         return true
     }
-    override fun get(e: Event?): Array<out String?> {
-        val task = this.task?.getSingle(e)
-        if (task != null) {
-            val serviceTask = serviceTaskProvider.serviceTask(task.toString())
-            if (serviceTask != null) {
-                return arrayOf(serviceTask.minServiceCount().toString())
-            }
-        }
-        return arrayOfNulls(0)
+
+    override fun get(e: Event?): Array<String?> {
+        val tasks = serviceTaskProvider.serviceTasksAsync()
+        return tasks.get().map { it.name() }.toTypedArray()
     }
 
     override fun getReturnType(): Class<out String> {
@@ -65,7 +56,7 @@ class ExprMinServiceCount : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "minservicecount of ${task.toString()}"
+        return "all cloudnet tasks"
     }
 
 }

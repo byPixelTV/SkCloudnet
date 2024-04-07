@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -13,42 +13,37 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-@Name("Start all services on task")
-@Description("Start all cloudnet services on a task.")
-@Examples("start all cloudnet services on task \"Lobby\"")
+@Name("Restart all services")
+@Description("Restart all cloudnet services.")
+@Examples("restart all cloudnet services")
 @Since("1.0")
 
-class EffStartAllServicesOnTask : Effect() {
+class RestartAllServices : Effect() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffStartAllServicesOnTask::class.java, "start all [cloudnet] services on [the] [task] %string%")
+            Skript.registerEffect(RestartAllServicesOnTask::class.java, "restart all [cloudnet] services")
         }
     }
 
-    private var taskExpression: Expression<String>? = null
-
-    @Suppress("UNCHECKED_CAST")
     override fun init(
         expressions: Array<Expression<*>>,
         matchedPattern: Int,
         isDelayed: Kleenean,
         parser: SkriptParser.ParseResult
     ): Boolean {
-        this.taskExpression = expressions[0] as Expression<String>
         return true
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "start all cloudnet services on task ${taskExpression?.getSingle(event)}"
+        return "restart all cloudnet services"
     }
 
     override fun execute(event: Event?) {
-        val task = taskExpression?.getSingle(event)
-        for (service in cnServiceProvider.servicesByTask(task.toString())) {
-            cnServiceProvider.serviceProviderByName(service.name()).start()
+        for (service in cnServiceProvider.services()) {
+            cnServiceProvider.serviceProviderByName(service.name()).restartAsync()
         }
     }
 }

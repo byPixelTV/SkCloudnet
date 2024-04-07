@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -48,7 +48,7 @@ class EffDeleteService : Effect() {
     override fun execute(event: Event?) {
         val service = serviceExpression?.getSingle(event)
         service?.let {
-            cnServiceProvider.serviceProviderByName(it).delete()
+            cnServiceProvider.serviceProviderByName(it).deleteAsync()
         }
     }
 }

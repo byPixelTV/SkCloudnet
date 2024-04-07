@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -13,42 +13,37 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-@Name("Restart all services on task")
-@Description("Restart all cloudnet services on a task.")
-@Examples("restart all cloudnet services on task \"Lobby-1\"")
+@Name("Start Service")
+@Description("Start all cloudnet services.")
+@Examples("start all cloudnet services")
 @Since("1.0")
 
-class RestartAllServicesOnTask : Effect() {
+class EffStartAllServices : Effect() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(RestartAllServicesOnTask::class.java, "restart all [cloudnet] services on [the] [task] %string%")
+            Skript.registerEffect(EffStartAllServices::class.java, "start all [cloudnet] services")
         }
     }
 
-    private var taskExpression: Expression<String>? = null
-
-    @Suppress("UNCHECKED_CAST")
     override fun init(
         expressions: Array<Expression<*>>,
         matchedPattern: Int,
         isDelayed: Kleenean,
         parser: SkriptParser.ParseResult
     ): Boolean {
-        this.taskExpression = expressions[0] as Expression<String>
         return true
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "restart all cloudnet services on task ${taskExpression?.getSingle(event)}"
+        return "start all cloudnet services"
     }
 
     override fun execute(event: Event?) {
-        val task = taskExpression?.getSingle(event)
-        for (service in cnServiceProvider.servicesByTask(task.toString())) {
-            cnServiceProvider.serviceProviderByName(service.name()).restart()
+        for (service in cnServiceProvider.services()) {
+            cnServiceProvider.serviceProviderByName(service.name()).startAsync()
         }
     }
 }

@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.expressions
+package de.bypixeltv.skcloudnet.elements.conditions.services
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -41,6 +41,7 @@ class CondCloudnetServiceRunning : Condition() {
         isNegated = parser.mark === 1
         return true
     }
+
     override fun check(e: Event?): Boolean {
         val service = service?.getSingle(e)
         if (service == null) return isNegated
