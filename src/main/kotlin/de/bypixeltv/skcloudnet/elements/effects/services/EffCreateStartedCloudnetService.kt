@@ -50,6 +50,6 @@ class EffCreateStartedCloudnetService : Effect() {
         val taskExpr = taskExpression?.getSingle(event)
         val serviceTask = serviceTaskProvider.serviceTask(taskExpr.toString())
         val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).build().createNewService() }
-        serviceInfoSnapshot?.serviceInfo()?.provider()?.start()
+        serviceInfoSnapshot?.serviceInfo()?.provider()?.startAsync()
     }
 }

@@ -43,7 +43,7 @@ class RestartAllServices : Effect() {
 
     override fun execute(event: Event?) {
         for (service in cnServiceProvider.services()) {
-            cnServiceProvider.serviceProviderByName(service.name()).restart()
+            cnServiceProvider.serviceProviderByName(service.name()).restartAsync()
         }
     }
 }

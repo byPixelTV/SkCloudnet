@@ -48,7 +48,7 @@ class RestartAllServicesOnTask : Effect() {
     override fun execute(event: Event?) {
         val task = taskExpression?.getSingle(event)
         for (service in cnServiceProvider.servicesByTask(task.toString())) {
-            cnServiceProvider.serviceProviderByName(service.name()).restart()
+            cnServiceProvider.serviceProviderByName(service.name()).restartAsync()
         }
     }
 }

@@ -48,7 +48,7 @@ class EffDeleteService : Effect() {
     override fun execute(event: Event?) {
         val service = serviceExpression?.getSingle(event)
         service?.let {
-            cnServiceProvider.serviceProviderByName(it).delete()
+            cnServiceProvider.serviceProviderByName(it).deleteAsync()
         }
     }
 }

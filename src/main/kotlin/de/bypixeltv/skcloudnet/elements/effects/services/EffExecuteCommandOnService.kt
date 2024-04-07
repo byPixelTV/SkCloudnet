@@ -51,7 +51,7 @@ class EffExecuteCommandOnService : Effect() {
         val service = serviceExpression?.getSingle(event)
         val command = commandExpression?.getSingle(event)
         service?.let {
-            cnServiceProvider.serviceProviderByName(it).runCommand(command.toString())
+            cnServiceProvider.serviceProviderByName(it).runCommandAsync(command.toString())
         }
     }
 }

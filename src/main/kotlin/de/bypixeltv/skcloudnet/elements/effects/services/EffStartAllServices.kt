@@ -43,7 +43,7 @@ class EffStartAllServices : Effect() {
 
     override fun execute(event: Event?) {
         for (service in cnServiceProvider.services()) {
-            cnServiceProvider.serviceProviderByName(service.name()).start()
+            cnServiceProvider.serviceProviderByName(service.name()).startAsync()
         }
     }
 }

@@ -43,7 +43,7 @@ class EffStopAllServices : Effect() {
 
     override fun execute(event: Event?) {
         for (service in cnServiceProvider.services()) {
-            cnServiceProvider.serviceProviderByName(service.name()).stop()
+            cnServiceProvider.serviceProviderByName(service.name()).stopAsync()
         }
     }
 }

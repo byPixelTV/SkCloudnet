@@ -12,6 +12,7 @@ import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
+import eu.cloudnetservice.driver.provider.ServiceTaskProvider
 import org.bukkit.event.Event
 
 
@@ -22,7 +23,7 @@ import org.bukkit.event.Event
 
 class ExprAllCloudnetTasks : SimpleExpression<String>() {
 
-    private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
+    val serviceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
 
     companion object{
         init {
@@ -46,9 +47,8 @@ class ExprAllCloudnetTasks : SimpleExpression<String>() {
     }
 
     override fun get(e: Event?): Array<String?> {
-        val services = cnServiceProvider.services().map { it.name().split("-")[0] }
-        val uniqueServices = LinkedHashSet(services)
-        return uniqueServices.toTypedArray()
+        val tasks = serviceTaskProvider.serviceTasksAsync()
+        return tasks.get().map { it.name() }.toTypedArray()
     }
 
     override fun getReturnType(): Class<out String> {

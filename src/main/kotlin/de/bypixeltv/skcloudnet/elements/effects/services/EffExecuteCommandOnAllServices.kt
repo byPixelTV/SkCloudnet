@@ -48,7 +48,7 @@ class EffExecuteCommandOnAllServices : Effect() {
     override fun execute(event: Event?) {
         val command = commandExpression?.getSingle(event)
         for (service in cnServiceProvider.services()) {
-            cnServiceProvider.serviceProviderByName(service.name()).runCommand(command.toString())
+            cnServiceProvider.serviceProviderByName(service.name()).runCommandAsync(command.toString())
         }
     }
 }

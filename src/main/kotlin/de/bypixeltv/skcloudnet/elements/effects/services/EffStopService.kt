@@ -48,7 +48,7 @@ class EffStopService : Effect() {
     override fun execute(event: Event?) {
         val service = serviceExpression?.getSingle(event)
         service?.let {
-            cnServiceProvider.serviceProviderByName(it).stop()
+            cnServiceProvider.serviceProviderByName(it).stopAsync()
         }
     }
 }

@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.expressions
+package de.bypixeltv.skcloudnet.elements.conditions.players
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -9,6 +9,7 @@ import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
+import de.bypixeltv.skcloudnet.Main
 import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import eu.cloudnetservice.driver.registry.ServiceRegistry
@@ -29,7 +30,7 @@ class CondIsPlayerOnNetwork : Condition() {
 
     companion object{
         init {
-            Skript.registerCondition(CondIsPlayerOnNetwork::class.java, "%string% (1¦is|2¦is(n't| not)) on network")
+            Skript.registerCondition(CondIsPlayerOnNetwork::class.java, "%player% (1¦is|2¦is(n't| not)) on network")
         }
     }
 
@@ -47,10 +48,15 @@ class CondIsPlayerOnNetwork : Condition() {
     }
 
     override fun check(e: Event?): Boolean {
-        val player = this.player?.getSingle(e)
-        if (player != null) {
+        val playerName = this.player?.getSingle(e)?.name
+        val onlinePlayerNames = playerManager.onlinePlayers().names()
+        Main.INSTANCE.server.consoleSender.sendMessage("onlinePlayerNames: $onlinePlayerNames")
+
+        if (playerName in onlinePlayerNames) {
+            // Player is online
             return !isNegated
         } else {
+            // Player is not online
             return isNegated
         }
     }

@@ -51,7 +51,7 @@ class EffExecuteCommandOnTask : Effect() {
         val task = taskExpression?.getSingle(event)
         val command = commandExpression?.getSingle(event)
         for (service in cnServiceProvider.servicesByTask(task.toString())) {
-            cnServiceProvider.serviceProviderByName(service.name()).runCommand(command.toString())
+            cnServiceProvider.serviceProviderByName(service.name()).runCommandAsync(command.toString())
         }
     }
 }

@@ -17,9 +17,6 @@ import java.nio.file.Paths
 class SkCloudnetCommands {
     private val miniMessages = MiniMessage.miniMessage()
 
-    val serviceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
-
-
     val command = commandTree("skcloudnet") {
         withPermission("skcloudnet.admin")
         literalArgument("info") {

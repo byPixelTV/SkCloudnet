@@ -48,7 +48,7 @@ class EffRestartService : Effect() {
     override fun execute(event: Event?) {
         val service = serviceExpression?.getSingle(event)
         service?.let {
-            cnServiceProvider.serviceProviderByName(it).restart()
+            cnServiceProvider.serviceProviderByName(it).restartAsync()
         }
     }
 }

@@ -49,6 +49,6 @@ class EffCreateCloudnetService : Effect() {
     override fun execute(event: Event?) {
         val taskExpr = taskExpression?.getSingle(event)
         val serviceTask = serviceTaskProvider.serviceTask(taskExpr.toString())
-        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).build().createNewService() }
+        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).build().createNewServiceAsync() }
     }
 }
