@@ -6,6 +6,9 @@ import de.bypixeltv.skcloudnet.utils.GetVersion
 import dev.jorel.commandapi.kotlindsl.commandTree
 import dev.jorel.commandapi.kotlindsl.literalArgument
 import dev.jorel.commandapi.kotlindsl.playerExecutor
+import eu.cloudnetservice.driver.inject.InjectionLayer
+import eu.cloudnetservice.driver.provider.ServiceTaskProvider
+import eu.cloudnetservice.driver.service.ServiceTask
 import net.axay.kspigot.config.JsonConfigManager.saveConfig
 import net.kyori.adventure.text.minimessage.MiniMessage
 import java.nio.file.Files
@@ -13,6 +16,8 @@ import java.nio.file.Paths
 
 class SkCloudnetCommands {
     private val miniMessages = MiniMessage.miniMessage()
+
+    val serviceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
 
 
     val command = commandTree("skcloudnet") {
@@ -84,7 +89,6 @@ class SkCloudnetCommands {
                 } else {
                     Main.INSTANCE.saveDefaultConfig()
                 }
-                Main.INSTANCE.saveConfig()
                 player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>Successfully reloaded the config!</color>"))
             }
         }

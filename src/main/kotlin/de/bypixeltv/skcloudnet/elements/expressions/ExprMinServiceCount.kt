@@ -29,7 +29,7 @@ class ExprMinServiceCount : SimpleExpression<String>() {
         init {
             Skript.registerExpression(
                 ExprMinServiceCount::class.java, String::class.java,
-                ExpressionType.SIMPLE, "minservicecount of [the] [cloudnet] services %string%")
+                ExpressionType.SIMPLE, "minservicecount of [the] [cloudnet] task %string%")
         }
     }
 
