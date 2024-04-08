@@ -3,6 +3,7 @@ package de.bypixeltv.skcloudnet
 import ch.njol.skript.Skript
 import ch.njol.skript.SkriptAddon
 import de.bypixeltv.skcloudnet.commands.SkCloudnetCommands
+import de.bypixeltv.skcloudnet.tasks.UpdateCheck
 import de.bypixeltv.skcloudnet.utils.GetVersion
 import de.bypixeltv.skcloudnet.utils.UpdateChecker
 import dev.jorel.commandapi.CommandAPI
@@ -85,6 +86,7 @@ class Main : KSpigot() {
         }
 
         UpdateChecker
+        UpdateCheck
 
         val metrics: Metrics = Metrics(this, 21526)
     }
