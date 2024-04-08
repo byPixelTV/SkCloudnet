@@ -18,10 +18,10 @@ import org.bukkit.entity.Player
 import org.bukkit.event.Event
 
 
-@Name("All Cloudnet Services On Task")
-@Description("Returns all running CloudNet services running a specify task")
-@Examples("loop all cloudnet services on task \"Lobby\":\n" + "\tsend \"%loop-value%\"")
-@Since("1.0")
+@Name("Is Player On Network")
+@Description("Checks if a player is on the network.")
+@Examples("if player is on network:", "    send \"You are on the network!\" to player", "else:", "    send \"You are not on the network!\" to player")
+@Since("1.3")
 
 class CondIsPlayerOnNetwork : Condition() {
 
