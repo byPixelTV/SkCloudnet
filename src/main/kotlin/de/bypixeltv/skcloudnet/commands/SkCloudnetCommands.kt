@@ -34,7 +34,7 @@ class SkCloudnetCommands {
                 val addonsList = if (addonMessages.isNotEmpty()) addonMessages.joinToString("\n") else "<color:#ff0000>No other addons found</color>"
                 player.sendMessage(
                     miniMessages.deserialize(
-                        "<dark_grey>--- <aqua>SkCloudnet</aqua> <grey>Info:</grey> ---</dark_grey>\n\n<grey>SkCloudnet Version: <aqua>${Main.INSTANCE.getPluginVersion()}</aqua>\nSkript Version: <aqua>${GetVersion().getSkriptVersion()}</aqua>\nServer Version: <aqua>${Main.INSTANCE.server.minecraftVersion}</aqua>\nServer Implementation: <aqua>${Main.INSTANCE.server.version}</aqua>\nAddons:\n$addonsList</grey>"
+                        "<dark_grey>--- <aqua>SkCloudnet</aqua> <grey>Info:</grey> ---</dark_grey>\n\n<grey>SkCloudnet Version: <aqua>${Main.INSTANCE.description.version}</aqua>\nSkript Version: <aqua>${GetVersion().getSkriptVersion()}</aqua>\nServer Version: <aqua>${Main.INSTANCE.server.minecraftVersion}</aqua>\nServer Implementation: <aqua>${Main.INSTANCE.server.version}</aqua>\nAddons:\n$addonsList</grey>"
                     )
                 )
             }
@@ -54,16 +54,16 @@ class SkCloudnetCommands {
             playerExecutor { player, _ ->
                 val githubVersion = GetVersion().getLatestAddonVersion()
                 if (githubVersion != null) {
-                    if (githubVersion != Main.INSTANCE.getPluginVersion()) {
+                    if (githubVersion != Main.INSTANCE.description.version) {
                         player.sendMessage(" ")
                         player.sendMessage(" ")
-                        player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>${Main.INSTANCE.getPluginVersion()}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n\n<color:#43fa00>Download the latest version here:</color> <click:open_url:'https://github.com/byPixelTV/SkCloudnet/releases'><blue>https://github.com/byPixelTV/SkCloudnet/releases</blue></click> <aqua>"))
+                        player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>${Main.INSTANCE.description.version}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n\n<color:#43fa00>Download the latest version here:</color> <click:open_url:'https://github.com/byPixelTV/SkCloudnet/releases'><blue>https://github.com/byPixelTV/SkCloudnet/releases</blue></click> <aqua>"))
                         player.sendMessage(" ")
                         player.sendMessage(" ")
                     } else {
                         player.sendMessage(" ")
                         player.sendMessage(" ")
-                        player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>You're on the latest version of SkCloudnet!</color> <aqua>Version <yellow>${Main.INSTANCE.getPluginVersion()}</yellow></aqua>"))
+                        player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>You're on the latest version of SkCloudnet!</color> <aqua>Version <yellow>${Main.INSTANCE.description.version}</yellow></aqua>"))
                         player.sendMessage(" ")
                         player.sendMessage(" ")
                     }

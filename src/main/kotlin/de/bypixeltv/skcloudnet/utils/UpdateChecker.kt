@@ -15,17 +15,17 @@ object UpdateChecker {
         val player = it.player
         if (Main.INSTANCE.getConfig().getBoolean("update-checker")) {
             if (player.hasPermission("skcloudnet.admin.version") || player.isOp) {
-                val githubVersion = GetVersion().getLatestAddonVersion()
+                val githubVersion = GetVersion().getLatestAddonVersion()?.replace("v", "")?.toDouble()
                 if (githubVersion != null) {
-                    if (githubVersion != Main.INSTANCE.getPluginVersion()) {
-                        player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>${Main.INSTANCE.getPluginVersion()}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n" +
-                                "\n" +
-                                "<color:#43fa00>Download the latest version here:</color> <click:open_url:'https://github.com/byPixelTV/SkCloudnet/releases'><blue>https://github.com/byPixelTV/SkCloudnet/releases</blue></click> <aqua>"))
+                    if (githubVersion > Main.INSTANCE.description.version.replace("v", "").toDouble()) {
+                        player.sendMessage(miniMessages.deserialize("\n\n<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>${Main.INSTANCE.description.version}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n\n<color:#43fa00>Download the latest version here:</color> <blue>https://github.com/byPixelTV/SkCloudnet/releases</blue> <aqua>"))
                     } else {
-                        return@listen
+                        if (githubVersion < Main.INSTANCE.description.version.replace("v", "").toDouble()) {
+                            player.sendMessage(miniMessages.deserialize("\n\n<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>${Main.INSTANCE.description.version}</color> > <color:#43fa00>${GetVersion().getLatestAddonVersion()}</color></aqua>"))
+                        }
                     }
                 } else {
-                    player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#ff0000>Unable to fetch the latest version from Github!</color> <aqua>Are you rate limited?</aqua>"))
+                    player.sendMessage(miniMessages.deserialize("\n\n<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#ff0000>Unable to fetch the latest version from Github!</color> <aqua>Are you rate limited?</aqua>"))
                 }
             }
         }
