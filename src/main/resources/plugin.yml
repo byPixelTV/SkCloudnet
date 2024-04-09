@@ -1,6 +1,6 @@
 main: "de.bypixeltv.skcloudnet.Main"
 name: "SkCloudnet"
-version: "v1.3"
+version: "v1.4"
 api-version: "1.20"
 
 author: "byPixelTV"

@@ -2,16 +2,14 @@ package de.bypixeltv.skcloudnet.commands
 
 import ch.njol.skript.Skript
 import de.bypixeltv.skcloudnet.Main
-import de.bypixeltv.skcloudnet.tasks.UpdateCheck
 import de.bypixeltv.skcloudnet.utils.GetVersion
-import de.bypixeltv.skcloudnet.utils.UpdateChecker
 import dev.jorel.commandapi.kotlindsl.commandTree
 import dev.jorel.commandapi.kotlindsl.literalArgument
 import dev.jorel.commandapi.kotlindsl.playerExecutor
+import dev.jorel.commandapi.kotlindsl.stringArgument
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.ServiceTaskProvider
-import eu.cloudnetservice.driver.service.ServiceTask
-import net.axay.kspigot.config.JsonConfigManager.saveConfig
+import eu.cloudnetservice.driver.registry.ServiceRegistry
+import eu.cloudnetservice.modules.bridge.player.PlayerManager
 import net.kyori.adventure.text.minimessage.MiniMessage
 import java.nio.file.Files
 import java.nio.file.Paths
