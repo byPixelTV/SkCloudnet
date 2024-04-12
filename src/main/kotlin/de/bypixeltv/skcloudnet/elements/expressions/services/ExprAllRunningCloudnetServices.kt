@@ -20,15 +20,15 @@ import org.bukkit.event.Event
 @Examples("loop all cloudnet services:\n" + "\tsend \"%loop-value%\"")
 @Since("1.0")
 
-class ExprAllCloudnetServices : SimpleExpression<String>() {
+class ExprAllRunningCloudnetServices : SimpleExpression<String>() {
 
     private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
             Skript.registerExpression(
-                ExprAllCloudnetServices::class.java, String::class.java,
-                ExpressionType.SIMPLE, "[(all [[of] the]|the)] [cloudnet] services")
+                ExprAllRunningCloudnetServices::class.java, String::class.java,
+                ExpressionType.SIMPLE, "[(all [[of] the]|the)] running [cloudnet] services")
         }
     }
 
@@ -46,7 +46,7 @@ class ExprAllCloudnetServices : SimpleExpression<String>() {
     }
 
     override fun get(e: Event?): Array<String?> {
-        return cnServiceProvider.services().map { it.name() }.toTypedArray()
+        return cnServiceProvider.runningServices().map { it.name() }.toTypedArray()
     }
 
     override fun getReturnType(): Class<out String> {
@@ -54,7 +54,7 @@ class ExprAllCloudnetServices : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "all cloudnet services"
+        return "all running cloudnet services"
     }
 
 }

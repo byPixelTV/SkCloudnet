@@ -14,18 +14,18 @@ import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
 
-@Name("CloudNet Service Running")
-@Description("Returns if a CloudNet service is running or not")
-@Examples("if cloudnet service \"Lobby-1\" is running:    send \"Lobby-1 is online\"")
+@Name("CloudNet Service Prepared")
+@Description("Returns if a CloudNet service is prepared or not")
+@Examples("if cloudnet service \"Lobby-1\" is prepared:    send \"Lobby-1 is prepared\"")
 @Since("1.1")
 
-class CondCloudnetServiceRunning : Condition() {
+class CondCloudnetServicePrepared : Condition() {
 
-    val cnServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
+    val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
-            Skript.registerCondition(CondCloudnetServiceRunning::class.java, "[lifecycle] [of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) (running|started)")
+            Skript.registerCondition(CondCloudnetServicePrepared::class.java, "[lifecycle] [of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) prepared")
         }
     }
 
@@ -44,7 +44,7 @@ class CondCloudnetServiceRunning : Condition() {
 
     override fun check(e: Event?): Boolean {
         val service = service?.getSingle(e) ?: return isNegated
-        return if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "RUNNING") {
+        return if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "PREPARED") {
             !isNegated
         } else {
             isNegated
@@ -52,7 +52,7 @@ class CondCloudnetServiceRunning : Condition() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "${service.toString()} is running"
+        return "${service.toString()} is prepared"
     }
 
 }
