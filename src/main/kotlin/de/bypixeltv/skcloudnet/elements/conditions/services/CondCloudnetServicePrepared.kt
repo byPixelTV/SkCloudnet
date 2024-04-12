@@ -44,10 +44,10 @@ class CondCloudnetServicePrepared : Condition() {
 
     override fun check(e: Event?): Boolean {
         val service = service?.getSingle(e) ?: return isNegated
-        return if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "PREPARED") {
-            !isNegated
+        if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "PREPARED") {
+            return isNegated
         } else {
-            isNegated
+            return !isNegated
         }
     }
 

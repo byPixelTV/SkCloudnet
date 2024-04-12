@@ -44,10 +44,10 @@ class CondCloudnetServiceStopping : Condition() {
 
     override fun check(e: Event?): Boolean {
         val service = service?.getSingle(e) ?: return isNegated
-        return if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "STOPPING") {
-            !isNegated
+        if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "STOPPING") {
+            return isNegated
         } else {
-            isNegated
+            return !isNegated
         }
     }
 

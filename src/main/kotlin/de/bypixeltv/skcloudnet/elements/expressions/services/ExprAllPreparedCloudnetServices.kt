@@ -61,7 +61,7 @@ class ExprAllPreparedCloudnetServices : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "all cloudnet services"
+        return "all prepared cloudnet services"
     }
 
 }
