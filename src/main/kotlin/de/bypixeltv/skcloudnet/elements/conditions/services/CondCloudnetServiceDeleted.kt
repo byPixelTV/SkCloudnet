@@ -45,9 +45,9 @@ class CondCloudnetServiceDeleted : Condition() {
     override fun check(e: Event?): Boolean {
         val service = service?.getSingle(e) ?: return isNegated
         return if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "DELETED") {
-            !isNegated
-        } else {
             isNegated
+        } else {
+            !isNegated
         }
     }
 
