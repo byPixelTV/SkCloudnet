@@ -56,7 +56,6 @@ class EffKickPlayerFromCloud : Effect() {
     override fun execute(event: Event?) {
         val player = this.player?.getSingle(event)
         var reason = this.reason?.getSingle(event)
-        val playerExecutor = player?.let { playerManager.playerExecutor(it.uniqueId) }
         if (reason == null) {
             reason = " "
         }

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "de.bypixeltv"
-version = "1.6"
+version = "1.6.0"
 
 repositories {
     mavenCentral()
@@ -40,7 +40,7 @@ dependencies {
     implementation("eu.cloudnetservice.cloudnet:platform-inject-support:4.0.0-RC10")
     implementation("eu.cloudnetservice.cloudnet:common:4.0.0-RC10")
     implementation("eu.cloudnetservice.cloudnet:node:4.0.0-RC10")
-    implementation("org.json:json:20231013")
+    implementation("org.json:json:20240303")
 }
 
 sourceSets {
