@@ -13,6 +13,7 @@ import java.nio.file.Paths
 class SkCloudnetCommands {
     private val miniMessages = MiniMessage.miniMessage()
 
+    @Suppress("UNUSED", "DEPRECATION")
     val command = commandTree("skcloudnet") {
         withPermission("skcloudnet.admin")
         literalArgument("info") {
@@ -48,16 +49,16 @@ class SkCloudnetCommands {
         literalArgument("version") {
             withPermission("skcloudnet.admin.version")
             playerExecutor { player, _ ->
-                val githubVersion = VersionUtils().getLatestAddonVersion()?.replace("v", "")?.toDouble()
+                val githubVersion = VersionUtils().getLatestAddonVersion()?.replace("v", "")
+                val currentVersion = Main.INSTANCE.description.version.replace("v", "")
+
                 if (githubVersion != null) {
-                    if (githubVersion > Main.INSTANCE.description.version.replace("v", "").toDouble()) {
-                        player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>${Main.INSTANCE.description.version}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n\n<color:#43fa00>Download the latest version here:</color> <blue>https://github.com/byPixelTV/SkCloudnet/releases</blue> <aqua>"))
+                    if (VersionUtils().isVersionGreater(githubVersion, currentVersion)) {
+                        player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>${Main.INSTANCE.description.version}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!<color:#43fa00>Download the latest version here:</color> <blue>https://github.com/byPixelTV/SkCloudnet/releases</blue> <aqua>"))
+                    } else if (githubVersion == currentVersion) {
+                        return@playerExecutor
                     } else {
-                        if (githubVersion == Main.INSTANCE.description.version.replace("v", "").toDouble()) {
-                            player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>You're on the latest version of SkCloudnet!</color> <aqua>Version <yellow>${Main.INSTANCE.description.version}</yellow></aqua>"))
-                        } else if (githubVersion < Main.INSTANCE.description.version.replace("v", "").toDouble()) {
-                            player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>${Main.INSTANCE.description.version}</color> > <color:#43fa00>${VersionUtils().getLatestAddonVersion()}</color></aqua>"))
-                        }
+                        player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>${Main.INSTANCE.description.version}</color> > <color:#43fa00>${VersionUtils().getLatestAddonVersion()}</color></aqua>"))
                     }
                 } else {
                     player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#ff0000>Unable to fetch the latest version from Github!</color> <aqua>Are you rate limited?</aqua>"))
