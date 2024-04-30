@@ -37,7 +37,6 @@ class Main : KSpigot() {
             e.printStackTrace()
         }
 
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>Enabling SkCloudnet v${this.description.version}...</color>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00> _____  _     _____  _                    _               _  </color>"))
@@ -49,7 +48,7 @@ class Main : KSpigot() {
         server.consoleSender.sendMessage(miniMessages.deserialize("<yellow>Made by byPixelTV</yellow>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(miniMessages.deserialize("<aqua>Successfully enabled SkCloudnet v${this.description.version}!</aqua>"))
+        server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <aqua>Successfully enabled SkCloudnet v${this.description.version}!</aqua>"))
 
 
         val githubVersion = VersionUtils().getLatestAddonVersion()?.replace("v", "")
@@ -63,18 +62,18 @@ class Main : KSpigot() {
                 // You're on the latest version
                 server.consoleSender.sendMessage(" ")
                 server.consoleSender.sendMessage(" ")
-                server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>You're on the latest version of SkCloudnet!</color> <aqua>Version <yellow>v${this.description.version}</yellow></aqua>"))
+                server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <color:#43fa00>You're on the latest version of SkCloudnet!</color> <aqua>Version <yellow>v${this.description.version}</yellow></aqua>"))
                 server.consoleSender.sendMessage(" ")
                 server.consoleSender.sendMessage(" ")
             } else if (githubVersion == currentVersion) {
                 // You're running a development version
                 server.consoleSender.sendMessage(" ")
                 server.consoleSender.sendMessage(" ")
-                server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>v${this.description.version}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n\n<color:#43fa00>Download the latest version here:</color> <blue>https://github.com/byPixelTV/SkCloudnet/releases</blue> <aqua>"))
+                server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>v${this.description.version}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n\n<color:#43fa00>Download the latest version here:</color> <blue>https://github.com/byPixelTV/SkCloudnet/releases</blue> <aqua>"))
                 server.consoleSender.sendMessage(" ")
                 server.consoleSender.sendMessage(" ")
             } else {
-                    server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>v${this.description.version}</color> > <color:#43fa00>${VersionUtils().getLatestAddonVersion()}</color></aqua>"))
+                    server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>v${this.description.version}</color> > <color:#43fa00>${VersionUtils().getLatestAddonVersion()}</color></aqua>"))
                     server.consoleSender.sendMessage(" ")
                     server.consoleSender.sendMessage(" ")
             }
@@ -82,7 +81,7 @@ class Main : KSpigot() {
             // Unable to fetch the latest version from GitHub
             server.consoleSender.sendMessage(" ")
             server.consoleSender.sendMessage(" ")
-            server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>Unable to fetch the latest version from Github!</color> <aqua>Are you rate limited?</aqua>"))
+            server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <color:#ff0000>Unable to fetch the latest version from Github!</color> <aqua>Are you rate limited?</aqua>"))
             server.consoleSender.sendMessage(" ")
             server.consoleSender.sendMessage(" ")
         }
@@ -90,18 +89,28 @@ class Main : KSpigot() {
         IngameUpdateMessage
         UpdateCheck
 
-        val metrics: Metrics = Metrics(this, 21526)
+        Metrics(this, 21526)
+
+        // Check if server plugin cloudnet-bridge is installed
+        val pluginManager = server.pluginManager
+        val cloudnetBridgePlugin = pluginManager.getPlugin("cloudnet-bridge")
+
+        if (cloudnetBridgePlugin == null) {
+            // The cloudnet-bridge plugin isn't installed
+            server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <color:#ff0000>Could not find CloudNet-Bridge, disabling!"))
+            pluginManager.disablePlugin(this)
+        }
+
     }
 
     override fun load() {
-        server.consoleSender.sendMessage(miniMessages.deserialize("<blue>Loading SkCloudnet...</blue>"))
         CommandAPI.onLoad(CommandAPIBukkitConfig(this).silentLogs(true).verboseOutput(true))
         SkCloudnetCommands()
     }
 
+    @Suppress("DEPRECATION")
     override fun shutdown() {
         CommandAPI.onDisable()
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>Disabling SkCloudnet v${this.description.version}...</color>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000> _____  _     _____  _                    _               _  </color>"))
@@ -113,14 +122,6 @@ class Main : KSpigot() {
         server.consoleSender.sendMessage(miniMessages.deserialize("<yellow>Made by byPixelTV</yellow>"))
         server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(miniMessages.deserialize("<aqua>Successfully disabled SkCloudnet v${this.description.version}!</aqua>"))
-    }
-
-    fun getMainInstance(): Main? {
-        return instance
-    }
-
-    fun getAddonInstance(): SkriptAddon? {
-        return addon
+        server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <aqua>Successfully disabled SkCloudnet v${this.description.version}!</aqua>"))
     }
 }

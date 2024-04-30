@@ -3,9 +3,9 @@ package de.bypixeltv.skcloudnet.commands
 import ch.njol.skript.Skript
 import de.bypixeltv.skcloudnet.Main
 import de.bypixeltv.skcloudnet.utils.VersionUtils
+import dev.jorel.commandapi.kotlindsl.anyExecutor
 import dev.jorel.commandapi.kotlindsl.commandTree
 import dev.jorel.commandapi.kotlindsl.literalArgument
-import dev.jorel.commandapi.kotlindsl.playerExecutor
 import net.kyori.adventure.text.minimessage.MiniMessage
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -18,7 +18,7 @@ class SkCloudnetCommands {
         withPermission("skcloudnet.admin")
         literalArgument("info") {
             withPermission("skcloudnet.admin.info")
-            playerExecutor { player, _ ->
+            anyExecutor { player, _ ->
                 val addonMessages = Skript.getAddons().mapNotNull { addon ->
                     val name = addon.name
                     if (!name.contains("SkCloudnet")) {
@@ -38,7 +38,7 @@ class SkCloudnetCommands {
         }
         literalArgument("docs") {
             withPermission("skcloudnet.admin.docs")
-            playerExecutor { player, _ ->
+            anyExecutor { player, _ ->
                 player.sendMessage(
                     miniMessages.deserialize(
                         "<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <grey><aqua>Documentation</aqua> for <aqua>SkCloudnet:</aqua></grey>\n<grey>-</grey> <click:open_url:'https://skripthub.net/docs/?addon=SkCloudnet'><aqua>SkriptHub</aqua> <dark_grey>(<aqua>Click me!</aqua>)</dark_grey></click>\n<grey>-</grey> <click:open_url:'https://docs.skunity.com/syntax/search/addon:skcloudnet'><aqua>SkUnity</aqua> <dark_grey>(<aqua>Click me!</aqua>)</dark_grey></click>"
@@ -48,7 +48,7 @@ class SkCloudnetCommands {
         }
         literalArgument("version") {
             withPermission("skcloudnet.admin.version")
-            playerExecutor { player, _ ->
+            anyExecutor { player, _ ->
                 val githubVersion = VersionUtils().getLatestAddonVersion()?.replace("v", "")
                 val currentVersion = Main.INSTANCE.description.version.replace("v", "")
 
@@ -56,7 +56,7 @@ class SkCloudnetCommands {
                     if (VersionUtils().isVersionGreater(githubVersion, currentVersion)) {
                         player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>${Main.INSTANCE.description.version}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!<color:#43fa00>Download the latest version here:</color> <blue>https://github.com/byPixelTV/SkCloudnet/releases</blue> <aqua>"))
                     } else if (githubVersion == currentVersion) {
-                        return@playerExecutor
+                        return@anyExecutor
                     } else {
                         player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>${Main.INSTANCE.description.version}</color> > <color:#43fa00>${VersionUtils().getLatestAddonVersion()}</color></aqua>"))
                     }
@@ -67,7 +67,7 @@ class SkCloudnetCommands {
         }
         literalArgument("reload") {
             withPermission("skcloudnet.admin.reload")
-            playerExecutor { player, _ ->
+            anyExecutor { player, _ ->
                 Main.INSTANCE.reloadConfig()
                 val path = Paths.get("/plugins/SkCloudnet/config.yml")
                 if (Files.exists(path)) {
