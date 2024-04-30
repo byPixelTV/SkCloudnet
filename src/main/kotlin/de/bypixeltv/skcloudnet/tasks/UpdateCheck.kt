@@ -1,16 +1,17 @@
 package de.bypixeltv.skcloudnet.tasks
 
 import de.bypixeltv.skcloudnet.Main
-import de.bypixeltv.skcloudnet.utils.GetVersion
+import de.bypixeltv.skcloudnet.utils.VersionUtils
 import net.axay.kspigot.runnables.task
 import net.kyori.adventure.text.minimessage.MiniMessage
 
 object UpdateCheck {
     private val miniMessages = MiniMessage.miniMessage()
 
-    fun scheudle() {
+    @Suppress("DEPRECATION")
+    private fun schedule() {
         task(false, 36000, 72000) {
-            val githubVersion = GetVersion().getLatestAddonVersion()?.replace("v", "")?.toDouble()
+            val githubVersion = VersionUtils().getLatestAddonVersion()?.replace("v", "")?.toDouble()
             if (githubVersion != null) {
                 if (githubVersion > Main.INSTANCE.description.version.replace("v", "").toDouble()) {
                     Main.INSTANCE.server.consoleSender.sendMessage(" ")
@@ -28,7 +29,7 @@ object UpdateCheck {
                     } else if (githubVersion < Main.INSTANCE.description.version.replace("v", "").toDouble()) {
                         Main.INSTANCE.server.consoleSender.sendMessage(" ")
                         Main.INSTANCE.server.consoleSender.sendMessage(" ")
-                        Main.INSTANCE.server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>${Main.INSTANCE.description.version}</color> > <color:#43fa00>${GetVersion().getLatestAddonVersion()}</color></aqua>"))
+                        Main.INSTANCE.server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>${Main.INSTANCE.description.version}</color> > <color:#43fa00>${VersionUtils().getLatestAddonVersion()}</color></aqua>"))
                         Main.INSTANCE.server.consoleSender.sendMessage(" ")
                         Main.INSTANCE.server.consoleSender.sendMessage(" ")
                     }
@@ -44,7 +45,7 @@ object UpdateCheck {
     }
 
     init {
-        scheudle()
+        schedule()
     }
 
 }

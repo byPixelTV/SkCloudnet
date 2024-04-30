@@ -4,14 +4,12 @@ import ch.njol.skript.Skript
 import ch.njol.skript.SkriptAddon
 import de.bypixeltv.skcloudnet.commands.SkCloudnetCommands
 import de.bypixeltv.skcloudnet.tasks.UpdateCheck
-import de.bypixeltv.skcloudnet.utils.GetVersion
-import de.bypixeltv.skcloudnet.utils.UpdateChecker
+import de.bypixeltv.skcloudnet.utils.VersionUtils
+import de.bypixeltv.skcloudnet.utils.IngameUpdateMessage
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
-import net.axay.kspigot.event.listen
 import net.axay.kspigot.main.KSpigot
 import net.kyori.adventure.text.minimessage.MiniMessage
-import org.bukkit.event.player.PlayerJoinEvent
 import java.io.IOException
 
 class Main : KSpigot() {
@@ -54,30 +52,34 @@ class Main : KSpigot() {
         server.consoleSender.sendMessage(miniMessages.deserialize("<aqua>Successfully enabled SkCloudnet v${this.description.version}!</aqua>"))
 
 
-        val githubVersion = GetVersion().getLatestAddonVersion()?.replace("v", "")?.toDouble()
+        val githubVersion = VersionUtils().getLatestAddonVersion()?.replace("v", "")
+        val currentVersion = this.description.version.replace("v", "")
+
         if (githubVersion != null) {
-            if (githubVersion > this.description.version.replace("v", "").toDouble()) {
+            if (VersionUtils().isVersionGreater(githubVersion, currentVersion)) {
+                // There is an update available
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(" ")
+                // You're on the latest version
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>You're on the latest version of SkCloudnet!</color> <aqua>Version <yellow>v${this.description.version}</yellow></aqua>"))
+                server.consoleSender.sendMessage(" ")
+                server.consoleSender.sendMessage(" ")
+            } else if (githubVersion == currentVersion) {
+                // You're running a development version
                 server.consoleSender.sendMessage(" ")
                 server.consoleSender.sendMessage(" ")
                 server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>v${this.description.version}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n\n<color:#43fa00>Download the latest version here:</color> <blue>https://github.com/byPixelTV/SkCloudnet/releases</blue> <aqua>"))
                 server.consoleSender.sendMessage(" ")
                 server.consoleSender.sendMessage(" ")
             } else {
-                if (githubVersion == this.description.version.replace("v", "").toDouble()) {
+                    server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>v${this.description.version}</color> > <color:#43fa00>${VersionUtils().getLatestAddonVersion()}</color></aqua>"))
                     server.consoleSender.sendMessage(" ")
                     server.consoleSender.sendMessage(" ")
-                    server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>You're on the latest version of SkCloudnet!</color> <aqua>Version <yellow>v${this.description.version}</yellow></aqua>"))
-                    server.consoleSender.sendMessage(" ")
-                    server.consoleSender.sendMessage(" ")
-                } else if (githubVersion < this.description.version.replace("v", "").toDouble()) {
-                    server.consoleSender.sendMessage(" ")
-                    server.consoleSender.sendMessage(" ")
-                    server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>v${this.description.version}</color> > <color:#43fa00>${GetVersion().getLatestAddonVersion()}</color></aqua>"))
-                    server.consoleSender.sendMessage(" ")
-                    server.consoleSender.sendMessage(" ")
-                }
             }
         } else {
+            // Unable to fetch the latest version from GitHub
             server.consoleSender.sendMessage(" ")
             server.consoleSender.sendMessage(" ")
             server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>Unable to fetch the latest version from Github!</color> <aqua>Are you rate limited?</aqua>"))
@@ -85,7 +87,7 @@ class Main : KSpigot() {
             server.consoleSender.sendMessage(" ")
         }
 
-        UpdateChecker
+        IngameUpdateMessage
         UpdateCheck
 
         val metrics: Metrics = Metrics(this, 21526)

@@ -2,14 +2,10 @@ package de.bypixeltv.skcloudnet.commands
 
 import ch.njol.skript.Skript
 import de.bypixeltv.skcloudnet.Main
-import de.bypixeltv.skcloudnet.utils.GetVersion
+import de.bypixeltv.skcloudnet.utils.VersionUtils
 import dev.jorel.commandapi.kotlindsl.commandTree
 import dev.jorel.commandapi.kotlindsl.literalArgument
 import dev.jorel.commandapi.kotlindsl.playerExecutor
-import dev.jorel.commandapi.kotlindsl.stringArgument
-import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.registry.ServiceRegistry
-import eu.cloudnetservice.modules.bridge.player.PlayerManager
 import net.kyori.adventure.text.minimessage.MiniMessage
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -34,7 +30,7 @@ class SkCloudnetCommands {
                 val addonsList = if (addonMessages.isNotEmpty()) addonMessages.joinToString("\n") else "<color:#ff0000>No other addons found</color>"
                 player.sendMessage(
                     miniMessages.deserialize(
-                        "<dark_grey>--- <aqua>SkCloudnet</aqua> <grey>Info:</grey> ---</dark_grey>\n\n<grey>SkCloudnet Version: <aqua>${Main.INSTANCE.description.version}</aqua>\nSkript Version: <aqua>${GetVersion().getSkriptVersion()}</aqua>\nServer Version: <aqua>${Main.INSTANCE.server.minecraftVersion}</aqua>\nServer Implementation: <aqua>${Main.INSTANCE.server.version}</aqua>\nAddons:\n$addonsList</grey>"
+                        "<dark_grey>--- <aqua>SkCloudnet</aqua> <grey>Info:</grey> ---</dark_grey>\n\n<grey>SkCloudnet Version: <aqua>${Main.INSTANCE.description.version}</aqua>\nSkript Version: <aqua>${VersionUtils().getSkriptVersion()}</aqua>\nServer Version: <aqua>${Main.INSTANCE.server.minecraftVersion}</aqua>\nServer Implementation: <aqua>${Main.INSTANCE.server.version}</aqua>\nAddons:\n$addonsList</grey>"
                     )
                 )
             }
@@ -52,7 +48,7 @@ class SkCloudnetCommands {
         literalArgument("version") {
             withPermission("skcloudnet.admin.version")
             playerExecutor { player, _ ->
-                val githubVersion = GetVersion().getLatestAddonVersion()?.replace("v", "")?.toDouble()
+                val githubVersion = VersionUtils().getLatestAddonVersion()?.replace("v", "")?.toDouble()
                 if (githubVersion != null) {
                     if (githubVersion > Main.INSTANCE.description.version.replace("v", "").toDouble()) {
                         player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>There is an update available for SkCloudnet!</color> <aqua>You're on version <yellow>${Main.INSTANCE.description.version}</yellow> and the latest version is <yellow>$githubVersion</yellow></aqua>!\n\n<color:#43fa00>Download the latest version here:</color> <blue>https://github.com/byPixelTV/SkCloudnet/releases</blue> <aqua>"))
@@ -60,7 +56,7 @@ class SkCloudnetCommands {
                         if (githubVersion == Main.INSTANCE.description.version.replace("v", "").toDouble()) {
                             player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>You're on the latest version of SkCloudnet!</color> <aqua>Version <yellow>${Main.INSTANCE.description.version}</yellow></aqua>"))
                         } else if (githubVersion < Main.INSTANCE.description.version.replace("v", "").toDouble()) {
-                            player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>${Main.INSTANCE.description.version}</color> > <color:#43fa00>${GetVersion().getLatestAddonVersion()}</color></aqua>"))
+                            player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#ff0000>You're running a development version of SkCloudnet! Please note that this version may contain bugs!</color> <aqua>Version <color:#ff0000>${Main.INSTANCE.description.version}</color> > <color:#43fa00>${VersionUtils().getLatestAddonVersion()}</color></aqua>"))
                         }
                     }
                 } else {

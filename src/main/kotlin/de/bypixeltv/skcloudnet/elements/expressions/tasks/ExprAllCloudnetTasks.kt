@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.expressions.services
+package de.bypixeltv.skcloudnet.elements.expressions.tasks
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -11,7 +11,6 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import eu.cloudnetservice.driver.provider.ServiceTaskProvider
 import org.bukkit.event.Event
 
@@ -23,7 +22,7 @@ import org.bukkit.event.Event
 
 class ExprAllCloudnetTasks : SimpleExpression<String>() {
 
-    val serviceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
+    private val serviceTaskProvider: ServiceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
 
     companion object{
         init {

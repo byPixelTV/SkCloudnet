@@ -1,4 +1,4 @@
-package de.bypixeltv.skcloudnet.elements.effects
+package de.bypixeltv.skcloudnet.elements.effects.players
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
@@ -9,9 +9,7 @@ import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
-import de.bypixeltv.skcloudnet.Main
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import eu.cloudnetservice.driver.registry.ServiceRegistry
 import eu.cloudnetservice.modules.bridge.player.PlayerManager
 import net.axay.kspigot.chat.literalText
