@@ -54,7 +54,7 @@ class UpdateChecker(private val plugin: Main) : Listener {
                 tagName = tagName.removePrefix("v")
                 consumer.accept(tagName)
             } catch (e: IOException) {
-                server.consoleSender.sendMessage(miniMessages.deserialize("<red>Checking for updates failed!</red>"))
+                server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <red>Checking for updates failed!</red>"))
             }
         }
     }

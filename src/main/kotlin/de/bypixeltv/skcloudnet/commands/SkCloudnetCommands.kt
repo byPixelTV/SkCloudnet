@@ -2,15 +2,20 @@ package de.bypixeltv.skcloudnet.commands
 
 import ch.njol.skript.Skript
 import ch.njol.skript.util.Version
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import de.bypixeltv.skcloudnet.Main
 import de.bypixeltv.skcloudnet.utils.UpdateChecker
 import de.bypixeltv.skcloudnet.utils.UpdateChecker.Companion.getLatestReleaseVersion
-import de.bypixeltv.skcloudnet.utils.VersionUtils
 import dev.jorel.commandapi.kotlindsl.anyExecutor
 import dev.jorel.commandapi.kotlindsl.commandTree
 import dev.jorel.commandapi.kotlindsl.literalArgument
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -36,7 +41,7 @@ class SkCloudnetCommands {
                     if (addonMessages.isNotEmpty()) addonMessages.joinToString("\n") else "<color:#ff0000>No other addons found</color>"
                 player.sendMessage(
                     miniMessages.deserialize(
-                        "<dark_grey>--- <aqua>SkCloudnet</aqua> <grey>Info:</grey> ---</dark_grey>\n\n<grey>SkCloudnet Version: <aqua>${Main.INSTANCE.description.version}</aqua>\nSkript Version: <aqua>${VersionUtils().getSkriptVersion()}</aqua>\nServer Version: <aqua>${Main.INSTANCE.server.minecraftVersion}</aqua>\nServer Implementation: <aqua>${Main.INSTANCE.server.version}</aqua>\nAddons:\n$addonsList</grey>"
+                        "<dark_grey>--- <aqua>SkCloudnet</aqua> <grey>Info:</grey> ---</dark_grey>\n\n<grey>SkCloudnet Version: <aqua>${Main.INSTANCE.description.version}</aqua>\nSkript Version: <aqua>${Skript.getInstance().description.version}</aqua>\nServer Version: <aqua>${Main.INSTANCE.server.minecraftVersion}</aqua>\nServer Implementation: <aqua>${Main.INSTANCE.server.version}</aqua>\nAddons:\n$addonsList</grey>"
                     )
                 )
             }
@@ -60,6 +65,11 @@ class SkCloudnetCommands {
                 getLatestReleaseVersion { version ->
                     val plugVer = Version(Main.INSTANCE.description.version)
                     val curVer = Version(version)
+                    val url = URL("https://api.github.com/repos/byPixelTV/SkCloudnet/releases/latest")
+                    val reader = BufferedReader(InputStreamReader(url.openStream()))
+                    val jsonObject = Gson().fromJson(reader, JsonObject::class.java)
+                    var tagName = jsonObject["tag_name"].asString
+                    tagName = tagName.removePrefix("v")
                     if (curVer.compareTo(plugVer) <= 0) {
                         player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <green>The plugin is up to date!</green>"))
                     } else {
