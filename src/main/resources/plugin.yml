@@ -14,3 +14,4 @@ libraries:
   - "org.json:json:20240303"
 
 depend: [Skript]
+softdepend: [cloudnet-bridge]
