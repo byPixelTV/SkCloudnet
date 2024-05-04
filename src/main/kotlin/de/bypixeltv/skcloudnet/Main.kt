@@ -70,7 +70,6 @@ class Main : KSpigot() {
             server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <color:#ff0000>Could not find CloudNet-Bridge, disabling!"))
             pluginManager.disablePlugin(this)
         }
-
     }
 
     override fun load() {

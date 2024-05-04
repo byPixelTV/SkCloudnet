@@ -10,11 +10,14 @@ import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
+import de.bypixeltv.skcloudnet.Main
 import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.registry.ServiceRegistry
 import eu.cloudnetservice.modules.bridge.player.PlayerManager
+import net.axay.kspigot.chat.literalText
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
+import java.util.*
 
 
 @Name("CloudNet Proxy of Player")
@@ -31,11 +34,11 @@ class ExprGetCloudnetPlayerProxy : SimpleExpression<String>() {
         init {
             Skript.registerExpression(
                 ExprGetCloudnetPlayerProxy::class.java, String::class.java,
-                ExpressionType.SIMPLE, "cloudnet proxy of [the player] %player%")
+                ExpressionType.SIMPLE, "cloudnet proxy of [(the player[s]|player)] %string%")
         }
     }
 
-    private var player: Expression<Player>? = null
+    private var uuid: Expression<String>? = null
 
     override fun isSingle(): Boolean {
         return true
@@ -48,14 +51,24 @@ class ExprGetCloudnetPlayerProxy : SimpleExpression<String>() {
         isDelayed: Kleenean?,
         parseResult: SkriptParser.ParseResult?
     ): Boolean {
-        this.player = exprs[0] as Expression<Player>?
+        this.uuid = exprs[0] as Expression<String>?
         return true
     }
+
     override fun get(e: Event?): Array<String?> {
-        val player = this.player?.getSingle(e)
+        val player = this.uuid?.getSingle(e)
         if (player != null) {
-            val serviceInfo = playerManager.onlinePlayer(player.uniqueId)?.loginService()?.serverName()
-            return arrayOf(serviceInfo.toString())
+            val uuidRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+            val uuidMatchResult = uuidRegex.toRegex().find(player.toString())
+
+            if (uuidMatchResult != null) {
+                val uuidString = uuidMatchResult.value
+                val uuid = UUID.fromString(uuidString)
+                val serviceInfo = playerManager.onlinePlayer(uuid)?.loginService()?.serverName()
+                return arrayOf(serviceInfo.toString())
+            } else {
+                Main.INSTANCE.server.consoleSender.sendMessage("No valid UUID found in your Syntax.")
+            }
         }
         return arrayOfNulls(0)
     }
@@ -65,7 +78,7 @@ class ExprGetCloudnetPlayerProxy : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "cloudnet proxy of ${player?.getSingle(e)}"
+        return "cloudnet proxy of ${uuid?.getSingle(e)}"
     }
 
 }

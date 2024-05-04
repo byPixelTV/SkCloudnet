@@ -7,20 +7,33 @@ import com.google.gson.JsonObject
 import de.bypixeltv.skcloudnet.Main
 import de.bypixeltv.skcloudnet.utils.UpdateChecker
 import de.bypixeltv.skcloudnet.utils.UpdateChecker.Companion.getLatestReleaseVersion
-import dev.jorel.commandapi.kotlindsl.anyExecutor
-import dev.jorel.commandapi.kotlindsl.commandTree
-import dev.jorel.commandapi.kotlindsl.literalArgument
+import dev.jorel.commandapi.arguments.ArgumentSuggestions
+import dev.jorel.commandapi.kotlindsl.*
+import eu.cloudnetservice.driver.inject.InjectionLayer
+import eu.cloudnetservice.driver.registry.ServiceRegistry
+import eu.cloudnetservice.modules.bridge.node.player.NodePlayerManager
+import eu.cloudnetservice.modules.bridge.player.CloudPlayer
+import eu.cloudnetservice.modules.bridge.player.PlayerManager
+import eu.cloudnetservice.modules.bridge.player.executor.PlayerExecutor
+import net.axay.kspigot.chat.literalText
+import net.axay.kspigot.extensions.onlinePlayers
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 class SkCloudnetCommands {
     private val miniMessages = MiniMessage.miniMessage()
+
+    private val serviceRegistry: ServiceRegistry? = InjectionLayer.ext().instance(ServiceRegistry::class.java)
+    private val playerManager: PlayerManager? = serviceRegistry?.firstProvider(PlayerManager::class.java)
 
     @Suppress("UNUSED", "DEPRECATION")
     val command = commandTree("skcloudnet") {
@@ -95,6 +108,43 @@ class SkCloudnetCommands {
                     Main.INSTANCE.saveDefaultConfig()
                 }
                 player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>Successfully reloaded the config!</color>"))
+            }
+        }
+        literalArgument("kick") {
+            literalArgument("self") {
+                playerExecutor { player, _ ->
+                    playerManager?.playerExecutor(player.uniqueId)?.kick(literalText("Test"))
+                }
+            }
+            literalArgument("others_test_1") {
+                stringArgument("player", false) {
+                    replaceSuggestions(ArgumentSuggestions.stringCollection {
+                        playerManager?.onlinePlayers()?.uniqueIds()?.map { it.toString() } ?: emptyList()
+                    })
+                    greedyStringArgument("reason", true) {
+                        playerExecutor { player, args ->
+                            val reason = args.getOptional(1).getOrNull() as? String ?: "No reason specified"
+                            val target = UUID.fromString(args[0].toString())
+                            playerManager?.playerExecutor(target)?.kick(literalText(reason))
+                            player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <grey>Kicked player <aqua>${Bukkit.getPlayer(target)?.name}</aqua> from the network!</grey>"))
+                        }
+                    }
+                }
+            }
+            literalArgument("others_test_2") {
+                stringArgument("player", false) {
+                    replaceSuggestions(ArgumentSuggestions.stringCollection {
+                        playerManager?.onlinePlayers()?.uniqueIds()?.map { it.toString() } ?: emptyList()
+                    })
+                    greedyStringArgument("reason", true) {
+                        playerExecutor { player, args ->
+                            val reason = args.getOptional(0).getOrNull() as? String ?: "No reason specified"
+                            val target = UUID.fromString(args[0].toString())
+                            playerManager?.playerExecutor(target)?.kick(literalText(reason))
+                            player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <grey>Kicked player <aqua>${Bukkit.getPlayer(target)?.name}</aqua> from the network!</grey>"))
+                        }
+                    }
+                }
             }
         }
     }

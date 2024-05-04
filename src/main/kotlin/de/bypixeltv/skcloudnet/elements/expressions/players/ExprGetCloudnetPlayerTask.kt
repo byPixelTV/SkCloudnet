@@ -10,11 +10,13 @@ import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
+import de.bypixeltv.skcloudnet.Main
 import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.registry.ServiceRegistry
 import eu.cloudnetservice.modules.bridge.player.PlayerManager
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
+import java.util.*
 
 
 @Name("CloudNet Task of Player")
@@ -31,11 +33,11 @@ class ExprGetCloudnetPlayerTask : SimpleExpression<String>() {
         init {
             Skript.registerExpression(
                 ExprGetCloudnetPlayerTask::class.java, String::class.java,
-                ExpressionType.SIMPLE, "cloudnet task of [the] [player] %player%")
+                ExpressionType.SIMPLE, "cloudnet task of [(the player|player)] %string%")
         }
     }
 
-    private var player: Expression<Player>? = null
+    private var player: Expression<String>? = null
 
     override fun isSingle(): Boolean {
         return true
@@ -48,15 +50,24 @@ class ExprGetCloudnetPlayerTask : SimpleExpression<String>() {
         isDelayed: Kleenean?,
         parseResult: SkriptParser.ParseResult?
     ): Boolean {
-        this.player = exprs[0] as Expression<Player>?
+        this.player = exprs[0] as Expression<String>?
         return true
     }
 
     override fun get(e: Event?): Array<String?> {
         val player = this.player?.getSingle(e)
         if (player != null) {
-            val serviceInfo = playerManager.onlinePlayer(player.uniqueId)?.connectedService()?.taskName()
-            return arrayOf(serviceInfo)
+            val uuidRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+            val uuidMatchResult = uuidRegex.toRegex().find(player.toString())
+
+            if (uuidMatchResult != null) {
+                val uuidString = uuidMatchResult.value
+                val uuid = UUID.fromString(uuidString)
+                val serviceInfo = playerManager.onlinePlayer(uuid)?.connectedService()?.taskName()
+                return arrayOf(serviceInfo.toString())
+            } else {
+                Main.INSTANCE.server.consoleSender.sendMessage("No valid UUID found in your Syntax.")
+            }
         }
         return arrayOfNulls(0)
     }

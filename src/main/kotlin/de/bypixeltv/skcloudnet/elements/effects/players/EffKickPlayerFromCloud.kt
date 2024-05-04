@@ -9,6 +9,7 @@ import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
+import de.bypixeltv.skcloudnet.Main
 import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.registry.ServiceRegistry
 import eu.cloudnetservice.modules.bridge.player.PlayerManager
@@ -16,6 +17,7 @@ import net.axay.kspigot.chat.literalText
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.jetbrains.annotations.Nullable
+import java.util.*
 
 
 @Name("Kick Player From Cloud")
@@ -30,11 +32,11 @@ class EffKickPlayerFromCloud : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(EffKickPlayerFromCloud::class.java, "kick %players% from (cloud|cloudnet|network|proxy|bungee|velocity|bungeecord) [(by reason of|because [of]|on account of|due to|with reason) %-string%]")
+            Skript.registerEffect(EffKickPlayerFromCloud::class.java, "kick %strings% from (cloud|cloudnet|network|proxy|bungee|velocity|bungeecord) [(by reason of|because [of]|on account of|due to|with reason) %-string%]")
         }
     }
 
-    private var players: Expression<Player>? = null
+    private var uuids: Expression<String>? = null
     @Nullable
     private var reason: Expression<String>? = null
 
@@ -45,7 +47,7 @@ class EffKickPlayerFromCloud : Effect() {
         isDelayed: Kleenean,
         parser: SkriptParser.ParseResult
     ): Boolean {
-        this.players = expressions[0] as Expression<Player>
+        this.uuids = expressions[0] as Expression<String>
         if (expressions.size > 1 && expressions[1] != null) {
             this.reason = expressions[1] as Expression<String>
         }
@@ -53,14 +55,23 @@ class EffKickPlayerFromCloud : Effect() {
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "kick ${this.players} from cloudnet ${this.reason}"
+        return "kick ${this.uuids} from cloudnet ${this.reason}"
     }
 
     override fun execute(e: Event?) {
         val r = if (reason != null) reason!!.getSingle(e) else ""
         if (r == null) return
-        for (p in players!!.getArray(e)) {
-            playerManager.playerExecutor(p.uniqueId).kick(literalText(r))
+        for (p in uuids!!.getArray(e)) {
+            val uuidRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+            val uuidMatchResult = uuidRegex.toRegex().find(p.toString())
+
+            if (uuidMatchResult != null) {
+                val uuidString = uuidMatchResult.value
+                val uuid = UUID.fromString(uuidString)
+                playerManager.playerExecutor(uuid).kick(literalText(r))
+            } else {
+                Main.INSTANCE.server.consoleSender.sendMessage("No valid UUID found in your Syntax.")
+            }
         }
     }
 }

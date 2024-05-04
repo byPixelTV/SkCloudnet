@@ -14,8 +14,10 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import eu.cloudnetservice.driver.registry.ServiceRegistry
 import eu.cloudnetservice.modules.bridge.player.PlayerManager
+import net.axay.kspigot.chat.literalText
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
+import java.util.*
 
 
 @Name("Is Player On Network")
@@ -30,11 +32,11 @@ class CondIsPlayerOnNetwork : Condition() {
 
     companion object{
         init {
-            Skript.registerCondition(CondIsPlayerOnNetwork::class.java, "%player% (1¦is|2¦is(n't| not)) on network")
+            Skript.registerCondition(CondIsPlayerOnNetwork::class.java, "%string% (is|is(n't| not)) on (network|cloud|proxy|bungee|velocity|bungeecord|cloudnet)")
         }
     }
 
-    private var player: Expression<Player>? = null
+    private var uuid: Expression<String>? = null
 
     override fun init(
         expressions: Array<Expression<*>>,
@@ -42,27 +44,34 @@ class CondIsPlayerOnNetwork : Condition() {
         isDelayed: Kleenean?,
         parser: SkriptParser.ParseResult
     ): Boolean {
-        this.player = expressions[0] as Expression<Player>?
+        this.uuid = expressions[0] as Expression<String>?
         isNegated = parser.mark === 1
         return true
     }
 
     override fun check(e: Event?): Boolean {
-        val playerName = this.player?.getSingle(e)?.name
-        val onlinePlayerNames = playerManager.onlinePlayers().names()
-        Main.INSTANCE.server.consoleSender.sendMessage("onlinePlayerNames: $onlinePlayerNames")
+        val uuid = this.uuid?.getSingle(e)
+        val uuidRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+        val uuidMatchResult = uuidRegex.toRegex().find(uuid.toString())
 
-        if (playerName in onlinePlayerNames) {
-            // Player is online
-            return !isNegated
+        if (uuidMatchResult != null) {
+            val uuidString = uuidMatchResult.value
+            val uuid = UUID.fromString(uuidString)
+            if (playerManager.onlinePlayer(uuid) != null) {
+                // Player is online
+                return isNegated
+            } else {
+                // Player is not online
+                return !isNegated
+            }
         } else {
-            // Player is not online
-            return isNegated
+            Main.INSTANCE.server.consoleSender.sendMessage("No valid UUID found in your Syntax.")
+            return !isNegated
         }
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "${player.toString()} is online"
+        return "${uuid.toString()} is online"
     }
 
 }

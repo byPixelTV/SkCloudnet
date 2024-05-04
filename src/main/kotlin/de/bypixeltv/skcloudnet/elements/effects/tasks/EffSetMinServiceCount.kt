@@ -16,7 +16,7 @@ import org.bukkit.event.Event
 
 @Name("Set Task MinServiceCount")
 @Description("Set the minservicecount of a CloudNet task")
-@Examples("set minservicecount of task \"Lobby\" to true")
+@Examples("set minservicecount of task \"Lobby\" to 1")
 @Since("1.0")
 
 class EffSetMinServiceCount : Effect() {
