@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.expressions.tasks
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
@@ -14,11 +10,6 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.ServiceTaskProvider
 import org.bukkit.event.Event
 
-
-@Name("MinServiceCount of a Task")
-@Description("Returns the minimum service count of a CloudNet task")
-@Examples("send minservicecount of \"Lobby\"")
-@Since("1.1")
 
 class ExprMinServiceCount : SimpleExpression<String>() {
 

@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.expressions.players
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
@@ -14,16 +10,9 @@ import de.bypixeltv.skcloudnet.Main
 import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.registry.ServiceRegistry
 import eu.cloudnetservice.modules.bridge.player.PlayerManager
-import net.axay.kspigot.chat.literalText
-import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import java.util.*
 
-
-@Name("CloudNet Proxy of Player")
-@Description("Returns the CloudNet proxy of a player.")
-@Examples("send cloudnet proxy of \"byPixelTV\" parsed as player")
-@Since("1.0")
 
 class ExprGetCloudnetPlayerProxy : SimpleExpression<String>() {
 

@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.conditions.services
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -13,11 +9,6 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-
-@Name("CloudNet Service Deleted")
-@Description("Returns if a CloudNet service is deleted or not")
-@Examples("if cloudnet service \"Lobby-1\" is deleted:    send \"Lobby-1 is deleted\"")
-@Since("1.1")
 
 class CondCloudnetServiceDeleted : Condition() {
 

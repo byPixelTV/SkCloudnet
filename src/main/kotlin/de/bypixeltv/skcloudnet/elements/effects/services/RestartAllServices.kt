@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -13,10 +9,6 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-@Name("Restart all services")
-@Description("Restart all cloudnet services.")
-@Examples("restart all cloudnet services")
-@Since("1.0")
 
 class RestartAllServices : Effect() {
 

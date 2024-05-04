@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.conditions.services
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -14,14 +10,9 @@ import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
 
-@Name("CloudNet Service Running")
-@Description("Returns if a CloudNet service is running or not")
-@Examples("if cloudnet service \"Lobby-1\" is running:    send \"Lobby-1 is online\"")
-@Since("1.1")
-
 class CondCloudnetServiceRunning : Condition() {
 
-    val cnServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
+    val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {

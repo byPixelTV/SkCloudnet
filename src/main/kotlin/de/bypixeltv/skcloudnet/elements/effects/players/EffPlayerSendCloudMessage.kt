@@ -12,20 +12,12 @@ import ch.njol.util.Kleenean
 import de.bypixeltv.skcloudnet.Main
 import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.registry.ServiceRegistry
-import eu.cloudnetservice.modules.bridge.player.CloudPlayer
 import eu.cloudnetservice.modules.bridge.player.PlayerManager
-import eu.cloudnetservice.modules.bridge.player.executor.PlayerExecutor
 import net.axay.kspigot.chat.literalText
-import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.jetbrains.annotations.Nullable
 import java.util.*
 
-
-@Name("Kick Player From Cloud")
-@Description("Kicks a player from the CloudNet network.")
-@Examples("kick \"byPixelTV\" parsed as player from proxy due to \"Star SkCloudnet now!!!\"")
-@Since("1.4")
 
 class EffPlayerSendCloudMessage : Effect() {
 

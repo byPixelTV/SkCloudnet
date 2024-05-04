@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.conditions.services
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -13,11 +9,6 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-
-@Name("CloudNet Service Stopping")
-@Description("Returns if a CloudNet service is stopping or not")
-@Examples("if cloudnet service \"Lobby-1\" is stopping:    send \"Lobby-1 is stopping\"")
-@Since("1.1")
 
 class CondCloudnetServiceStopping : Condition() {
 

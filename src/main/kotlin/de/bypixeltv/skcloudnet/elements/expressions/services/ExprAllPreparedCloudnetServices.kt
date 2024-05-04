@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.expressions.services
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
@@ -14,11 +10,6 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-
-@Name("All Running Services")
-@Description("Returns all running CloudNet services")
-@Examples("loop all cloudnet services:\n" + "\tsend \"%loop-value%\"")
-@Since("1.0")
 
 class ExprAllPreparedCloudnetServices : SimpleExpression<String>() {
 

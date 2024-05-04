@@ -14,11 +14,6 @@ import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
 
-@Name("CloudNet Service Prepared")
-@Description("Returns if a CloudNet service is prepared or not")
-@Examples("if cloudnet service \"Lobby-1\" is prepared:    send \"Lobby-1 is prepared\"")
-@Since("1.1")
-
 class CondCloudnetServicePrepared : Condition() {
 
     val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)

@@ -1,29 +1,17 @@
 package de.bypixeltv.skcloudnet.elements.conditions.players
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
 import de.bypixeltv.skcloudnet.Main
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import eu.cloudnetservice.driver.registry.ServiceRegistry
 import eu.cloudnetservice.modules.bridge.player.PlayerManager
-import net.axay.kspigot.chat.literalText
-import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import java.util.*
 
-
-@Name("Is Player On Network")
-@Description("Checks if a player is on the network.")
-@Examples("if player is on network:", "    send \"You are on the network!\" to player", "else:", "    send \"You are not on the network!\" to player")
-@Since("1.3")
 
 class CondIsPlayerOnNetwork : Condition() {
 

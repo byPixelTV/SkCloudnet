@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.conditions.tasks
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -13,11 +9,6 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.ServiceTaskProvider
 import org.bukkit.event.Event
 
-
-@Name("Task in Maintenance")
-@Description("Returns if a CloudNet task is in maintenance or not")
-@Examples("if task \"Lobby\" is in maintenance:    send \"Lobby is in maintenance\"")
-@Since("1.1")
 
 class CondTaskInMaintenance : Condition() {
 

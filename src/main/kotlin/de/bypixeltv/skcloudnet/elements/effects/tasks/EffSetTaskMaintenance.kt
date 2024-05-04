@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.effects.tasks
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -14,10 +10,6 @@ import eu.cloudnetservice.driver.provider.ServiceTaskProvider
 import eu.cloudnetservice.driver.service.ServiceTask
 import org.bukkit.event.Event
 
-@Name("Set Task Maintenance")
-@Description("Set the maintenance state of a CloudNet task")
-@Examples("set maintenance of task \"Lobby\" to true")
-@Since("1.0")
 
 class EffSetTaskMaintenance : Effect() {
 

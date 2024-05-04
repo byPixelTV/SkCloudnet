@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.effects.services
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -13,10 +9,6 @@ import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
-@Name("Restart Service")
-@Description("Restart a CloudNet service by its name.")
-@Examples("restart cloudnet service \"Lobby-1\"")
-@Since("1.0")
 
 class EffRestartService : Effect() {
 
