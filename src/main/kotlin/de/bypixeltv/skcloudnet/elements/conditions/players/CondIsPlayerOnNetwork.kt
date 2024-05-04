@@ -20,12 +20,14 @@ class CondIsPlayerOnNetwork : Condition() {
 
     companion object{
         init {
-            Skript.registerCondition(CondIsPlayerOnNetwork::class.java, "%string% (is|is(n't| not)) on (network|cloud|proxy|bungee|velocity|bungeecord|cloudnet)")
+            Skript.registerCondition(
+                CondIsPlayerOnNetwork::class.java, "%string% (1¦is|2¦is(n't| not)) on (network|cloud|proxy|bungee|velocity|bungeecord|cloudnet)")
         }
     }
 
     private var uuid: Expression<String>? = null
 
+    @Suppress("UNCHECKED_CAST")
     override fun init(
         expressions: Array<Expression<*>>,
         matchedPattern: Int,
@@ -33,7 +35,7 @@ class CondIsPlayerOnNetwork : Condition() {
         parser: SkriptParser.ParseResult
     ): Boolean {
         this.uuid = expressions[0] as Expression<String>?
-        isNegated = parser.mark === 1
+        isNegated = parser.mark == 1
         return true
     }
 

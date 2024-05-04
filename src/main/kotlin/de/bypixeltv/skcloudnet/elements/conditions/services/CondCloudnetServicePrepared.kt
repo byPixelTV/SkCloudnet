@@ -1,10 +1,6 @@
 package de.bypixeltv.skcloudnet.elements.conditions.services
 
 import ch.njol.skript.Skript
-import ch.njol.skript.doc.Description
-import ch.njol.skript.doc.Examples
-import ch.njol.skript.doc.Name
-import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -20,7 +16,7 @@ class CondCloudnetServicePrepared : Condition() {
 
     companion object{
         init {
-            Skript.registerCondition(CondCloudnetServicePrepared::class.java, "[lifecycle] [of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) prepared")
+            Skript.registerCondition(CondCloudnetServicePrepared::class.java, "[lifecycle of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) prepared")
         }
     }
 

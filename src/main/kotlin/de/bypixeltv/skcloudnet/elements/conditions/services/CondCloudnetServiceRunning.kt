@@ -16,7 +16,7 @@ class CondCloudnetServiceRunning : Condition() {
 
     companion object{
         init {
-            Skript.registerCondition(CondCloudnetServiceRunning::class.java, "[lifecycle] [of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) (running|started)")
+            Skript.registerCondition(CondCloudnetServiceRunning::class.java, "[lifecycle of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) (running|started)")
         }
     }
 

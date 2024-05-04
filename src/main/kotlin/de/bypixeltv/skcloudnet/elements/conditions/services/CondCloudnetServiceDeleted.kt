@@ -16,7 +16,7 @@ class CondCloudnetServiceDeleted : Condition() {
 
     companion object{
         init {
-            Skript.registerCondition(CondCloudnetServiceDeleted::class.java, "[lifecycle] [of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) deleted")
+            Skript.registerCondition(CondCloudnetServiceDeleted::class.java, "[lifecycle of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) deleted")
         }
     }
 

@@ -16,7 +16,7 @@ class CondCloudnetServiceStopping : Condition() {
 
     companion object{
         init {
-            Skript.registerCondition(CondCloudnetServiceStopping::class.java, "[lifecycle] [of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) stopping")
+            Skript.registerCondition(CondCloudnetServiceStopping::class.java, "[lifecycle of] [cloudnet] service %string% (1¦is|2¦is(n't| not)) stopping")
         }
     }
 
