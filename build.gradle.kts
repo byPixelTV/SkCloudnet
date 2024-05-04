@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.23"
-    id("io.papermc.paperweight.userdev") version "1.5.12"
+    id("io.papermc.paperweight.userdev") version "1.7.0"
     id("xyz.jpenilla.run-paper") version "1.1.0"
 }
 
@@ -23,11 +23,11 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
-    implementation("dev.jorel", "commandapi-bukkit-shade", "9.3.0")
-    implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.3.0")
+    implementation("dev.jorel", "commandapi-bukkit-shade", "9.4.0")
+    implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.4.0")
     implementation("net.axay:kspigot:1.20.3")
 
-    implementation("com.github.SkriptLang:Skript:2.8.4")
+    implementation("com.github.SkriptLang:Skript:2.8.5")
 
 
     implementation("eu.cloudnetservice.cloudnet:syncproxy:4.0.0-RC10")
@@ -40,7 +40,6 @@ dependencies {
     implementation("eu.cloudnetservice.cloudnet:platform-inject-support:4.0.0-RC10")
     implementation("eu.cloudnetservice.cloudnet:common:4.0.0-RC10")
     implementation("eu.cloudnetservice.cloudnet:node:4.0.0-RC10")
-    implementation("org.json:json:20240303")
 }
 
 sourceSets {

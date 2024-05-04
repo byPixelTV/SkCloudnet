@@ -65,11 +65,7 @@ class Main : KSpigot() {
         val pluginManager = server.pluginManager
         val cloudnetBridgePlugin = pluginManager.getPlugin("cloudnet-bridge")
 
-        if (cloudnetBridgePlugin == null) {
-            // The cloudnet-bridge plugin isn't installed
-            server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <color:#ff0000>Could not find CloudNet-Bridge, disabling!"))
-            pluginManager.disablePlugin(this)
-        }
+
     }
 
     override fun load() {

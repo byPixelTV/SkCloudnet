@@ -8,10 +8,9 @@ description: "A Skript-Addon to interact with your CloudNet v4 instance."
 website: "https://bypixeltv.me"
 
 libraries:
-  - "dev.jorel:commandapi-bukkit-shade:9.3.0"
-  - "dev.jorel:commandapi-bukkit-kotlin:9.3.0"
+  - "dev.jorel:commandapi-bukkit-shade:9.4.0"
+  - "dev.jorel:commandapi-bukkit-kotlin:9.4.0"
   - "net.axay:kspigot:1.20.3"
-  - "org.json:json:20240303"
 
 depend: [Skript]
 softdepend: [cloudnet-bridge]
