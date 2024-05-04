@@ -22,5 +22,4 @@
   <img width="12" />
 </div>
 
-[![Get on skUnity](https://docs.skunity.com/skunity/library/Docs/Assets/assets/images/buttons/v1/get_on_docs.png)](https://docs.skunity.com/syntax/search/addon:SkCloudnet)
 [![SkriptHubViewTheDocs](http://skripthub.net/static/addon/ViewTheDocsButton.png)](http://skripthub.net/docs/?addon=SkCloudnet)
