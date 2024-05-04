@@ -32,9 +32,6 @@ import kotlin.jvm.optionals.getOrNull
 class SkCloudnetCommands {
     private val miniMessages = MiniMessage.miniMessage()
 
-    private val serviceRegistry: ServiceRegistry? = InjectionLayer.ext().instance(ServiceRegistry::class.java)
-    private val playerManager: PlayerManager? = serviceRegistry?.firstProvider(PlayerManager::class.java)
-
     @Suppress("UNUSED", "DEPRECATION")
     val command = commandTree("skcloudnet") {
         withPermission("skcloudnet.admin")
@@ -108,43 +105,6 @@ class SkCloudnetCommands {
                     Main.INSTANCE.saveDefaultConfig()
                 }
                 player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <color:#43fa00>Successfully reloaded the config!</color>"))
-            }
-        }
-        literalArgument("kick") {
-            literalArgument("self") {
-                playerExecutor { player, _ ->
-                    playerManager?.playerExecutor(player.uniqueId)?.kick(literalText("Test"))
-                }
-            }
-            literalArgument("others_test_1") {
-                stringArgument("player", false) {
-                    replaceSuggestions(ArgumentSuggestions.stringCollection {
-                        playerManager?.onlinePlayers()?.uniqueIds()?.map { it.toString() } ?: emptyList()
-                    })
-                    greedyStringArgument("reason", true) {
-                        playerExecutor { player, args ->
-                            val reason = args.getOptional(1).getOrNull() as? String ?: "No reason specified"
-                            val target = UUID.fromString(args[0].toString())
-                            playerManager?.playerExecutor(target)?.kick(literalText(reason))
-                            player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <grey>Kicked player <aqua>${Bukkit.getPlayer(target)?.name}</aqua> from the network!</grey>"))
-                        }
-                    }
-                }
-            }
-            literalArgument("others_test_2") {
-                stringArgument("player", false) {
-                    replaceSuggestions(ArgumentSuggestions.stringCollection {
-                        playerManager?.onlinePlayers()?.uniqueIds()?.map { it.toString() } ?: emptyList()
-                    })
-                    greedyStringArgument("reason", true) {
-                        playerExecutor { player, args ->
-                            val reason = args.getOptional(0).getOrNull() as? String ?: "No reason specified"
-                            val target = UUID.fromString(args[0].toString())
-                            playerManager?.playerExecutor(target)?.kick(literalText(reason))
-                            player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <grey>Kicked player <aqua>${Bukkit.getPlayer(target)?.name}</aqua> from the network!</grey>"))
-                        }
-                    }
-                }
             }
         }
     }
