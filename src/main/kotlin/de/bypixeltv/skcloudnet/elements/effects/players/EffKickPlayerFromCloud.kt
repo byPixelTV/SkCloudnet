@@ -58,7 +58,7 @@ class EffKickPlayerFromCloud : Effect() {
             if (uuidMatchResult != null) {
                 val uuidString = uuidMatchResult.value
                 val uuid = UUID.fromString(uuidString)
-                playerManager.playerExecutor(uuid).kick(literalText(r))
+                playerManager.playerExecutor(uuid).kick(literalText(r.toString()))
             } else {
                 Main.INSTANCE.server.consoleSender.sendMessage("No valid UUID found in your Syntax.")
             }
