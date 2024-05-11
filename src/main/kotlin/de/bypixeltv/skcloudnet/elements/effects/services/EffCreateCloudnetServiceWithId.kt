@@ -11,17 +11,18 @@ import eu.cloudnetservice.driver.service.ServiceConfiguration
 import org.bukkit.event.Event
 
 
-class EffCreateStartedCloudnetService : Effect() {
+class EffCreateCloudnetServiceWithId : Effect() {
 
     private val serviceTaskProvider: ServiceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
 
     companion object{
         init {
-            Skript.registerEffect(EffCreateStartedCloudnetService::class.java, "create [a] started [cloudnet] service by [the task] %string%")
+            Skript.registerEffect(EffCreateCloudnetServiceWithId::class.java, "create [a] [cloudnet] service by [the task] %string% with (the id|id) %int%")
         }
     }
 
     private var taskExpression: Expression<String>? = null
+    private var idExpression: Expression<Int>? = null
 
     @Suppress("UNCHECKED_CAST")
     override fun init(
@@ -31,17 +32,18 @@ class EffCreateStartedCloudnetService : Effect() {
         parser: SkriptParser.ParseResult
     ): Boolean {
         this.taskExpression = expressions[0] as Expression<String>
+        this.idExpression = expressions[1] as Expression<Int>
         return true
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "create started cloudnet service by task ${taskExpression.toString()}"
+        return "create cloudnet service by task ${taskExpression.toString()} with id ${idExpression.toString()}"
     }
 
     override fun execute(event: Event?) {
         val taskExpr = taskExpression?.getSingle(event)
+        val idExpr = idExpression?.getSingle(event) ?: -1
         val serviceTask = serviceTaskProvider.serviceTask(taskExpr.toString())
-        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).build().createNewService() }
-        serviceInfoSnapshot?.serviceInfo()?.provider()?.startAsync()
+        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).taskId(idExpr).build().createNewServiceAsync() }
     }
 }
