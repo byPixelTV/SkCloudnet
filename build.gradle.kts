@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "de.bypixeltv"
-version = "1.7.2"
+version = "1.7.3-beta1"
 
 repositories {
     mavenCentral()

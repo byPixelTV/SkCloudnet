@@ -14,7 +14,7 @@ import org.bukkit.event.Event
 import org.jetbrains.annotations.Nullable
 import java.util.*
 
-
+@Suppress("unused")
 class EffKickPlayerFromCloud : Effect() {
 
     private val serviceRegistry: ServiceRegistry = InjectionLayer.ext().instance(ServiceRegistry::class.java)
@@ -38,9 +38,7 @@ class EffKickPlayerFromCloud : Effect() {
         parser: SkriptParser.ParseResult
     ): Boolean {
         this.uuids = expressions[0] as Expression<String>
-        if (expressions.size > 1 && expressions[1] != null) {
-            this.reason = expressions[1] as Expression<String>
-        }
+        this.reason = expressions[1] as Expression<String>
         return true
     }
 
@@ -49,8 +47,7 @@ class EffKickPlayerFromCloud : Effect() {
     }
 
     override fun execute(e: Event?) {
-        val r = if (reason != null) reason!!.getSingle(e) else ""
-        if (r == null) return
+        val r = reason?.getSingle(e) ?: ""
         for (p in uuids!!.getArray(e)) {
             val uuidRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
             val uuidMatchResult = uuidRegex.toRegex().find(p.toString())
@@ -58,7 +55,7 @@ class EffKickPlayerFromCloud : Effect() {
             if (uuidMatchResult != null) {
                 val uuidString = uuidMatchResult.value
                 val uuid = UUID.fromString(uuidString)
-                playerManager.playerExecutor(uuid).kick(literalText(r.toString()))
+                playerManager.playerExecutor(uuid).kick(literalText(r))
             } else {
                 Main.INSTANCE.server.consoleSender.sendMessage("No valid UUID found in your Syntax.")
             }
