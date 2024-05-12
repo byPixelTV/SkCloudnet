@@ -17,12 +17,12 @@ class EffCreateCloudnetServiceWithId : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(EffCreateCloudnetServiceWithId::class.java, "create [a] [cloudnet] service by [the task] %string% with (the id|id) %int%")
+            Skript.registerEffect(EffCreateCloudnetServiceWithId::class.java, "create [a] [cloudnet] service by [the task] %string% with (the id|id) %number%")
         }
     }
 
     private var taskExpression: Expression<String>? = null
-    private var idExpression: Expression<Int>? = null
+    private var idExpression: Expression<Number>? = null
 
     @Suppress("UNCHECKED_CAST")
     override fun init(
@@ -32,7 +32,7 @@ class EffCreateCloudnetServiceWithId : Effect() {
         parser: SkriptParser.ParseResult
     ): Boolean {
         this.taskExpression = expressions[0] as Expression<String>
-        this.idExpression = expressions[1] as Expression<Int>
+        this.idExpression = expressions[1] as Expression<Number>
         return true
     }
 
@@ -44,6 +44,6 @@ class EffCreateCloudnetServiceWithId : Effect() {
         val taskExpr = taskExpression?.getSingle(event)
         val idExpr = idExpression?.getSingle(event) ?: -1
         val serviceTask = serviceTaskProvider.serviceTask(taskExpr.toString())
-        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).taskId(idExpr).build().createNewServiceAsync() }
+        val serviceInfoSnapshot = serviceTask?.let { ServiceConfiguration.builder(it).taskId(idExpr.toInt()).build().createNewServiceAsync() }
     }
 }

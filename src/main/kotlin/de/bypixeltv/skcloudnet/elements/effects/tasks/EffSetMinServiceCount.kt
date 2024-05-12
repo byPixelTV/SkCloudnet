@@ -13,7 +13,7 @@ import org.bukkit.event.Event
 
 class EffSetMinServiceCount : Effect() {
 
-    val serviceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
+    private val serviceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
 
     companion object{
         init {
