@@ -23,7 +23,7 @@ class ExprGetCloudnetPlayerTask : SimpleExpression<String>() {
         init {
             Skript.registerExpression(
                 ExprGetCloudnetPlayerTask::class.java, String::class.java,
-                ExpressionType.SIMPLE, "cloudnet task of [(the player|player)] %string%")
+                    ExpressionType.SIMPLE, "cloudnet task of [(the player|player)] %string%")
         }
     }
 

@@ -7,26 +7,26 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.ServiceTaskProvider
+import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
 
-class ExprMinServiceCount : SimpleExpression<String>() {
+class ExprAllPreparedCloudnetServicesOnTask : SimpleExpression<String>() {
 
-    val serviceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
+    private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
             Skript.registerExpression(
-                ExprMinServiceCount::class.java, String::class.java,
-                ExpressionType.SIMPLE, "(minservicecount|minsercount|msc) of [the] [cloudnet] task %string%")
+                ExprAllPreparedCloudnetServicesOnTask::class.java, String::class.java,
+                ExpressionType.SIMPLE, "[(all [[of] the]|the)] prepapred cloudnet services on [(the task|task|cloudnet task|the cloudnet task)] %string%")
         }
     }
 
     private var task: Expression<String>? = null
 
     override fun isSingle(): Boolean {
-        return true
+        return false
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -39,15 +39,19 @@ class ExprMinServiceCount : SimpleExpression<String>() {
         this.task = exprs[0] as Expression<String>?
         return true
     }
-    override fun get(e: Event?): Array<out String?> {
+    override fun get(e: Event?): Array<String?>? {
         val task = this.task?.getSingle(e)
+        val preparedServices = mutableListOf<String?>()
         if (task != null) {
-            val serviceTask = serviceTaskProvider.serviceTask(task.toString())
-            if (serviceTask != null) {
-                return arrayOf(serviceTask.minServiceCount().toString())
+            for (service in cnServiceProvider.servicesByTask(task)) {
+                if (service.lifeCycle().name == "PREPARED") {
+                    preparedServices.add(service.name())
+                }
             }
+            val preparedServicesArray = preparedServices.toTypedArray()
+            return preparedServicesArray
         }
-        return arrayOfNulls(0)
+        return null
     }
 
     override fun getReturnType(): Class<out String> {
@@ -55,7 +59,7 @@ class ExprMinServiceCount : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "minservicecount of ${task.toString()}"
+        return "all prepared cloudnet services on task ${this.task?.getSingle(e)}"
     }
 
 }

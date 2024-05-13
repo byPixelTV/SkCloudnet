@@ -1,11 +1,11 @@
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "1.9.24"
     id("io.papermc.paperweight.userdev") version "1.7.0"
     id("xyz.jpenilla.run-paper") version "1.1.0"
 }
 
 group = "de.bypixeltv"
-version = "1.7.3-beta1"
+version = "1.7.3"
 
 repositories {
     mavenCentral()
@@ -27,7 +27,7 @@ dependencies {
     implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.4.0")
     implementation("net.axay:kspigot:1.20.3")
 
-    implementation("com.github.SkriptLang:Skript:2.8.5")
+    implementation("com.github.SkriptLang:Skript:2.9.0-beta1-pre")
 
 
     implementation("eu.cloudnetservice.cloudnet:syncproxy:4.0.0-RC10")

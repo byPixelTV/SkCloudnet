@@ -16,7 +16,7 @@ class CondTaskInMaintenance : Condition() {
 
     companion object{
         init {
-            Skript.registerCondition(CondTaskInMaintenance::class.java, "[cloudnet] task %string% (1¦is|2¦is(n't| not)) in maintenance")
+            Skript.registerCondition(CondTaskInMaintenance::class.java, "[(the task|task|cloudnet task|the cloudnet task)] %string% (1¦is|2¦is(n't| not)) in maintenance")
         }
     }
 

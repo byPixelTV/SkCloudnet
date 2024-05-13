@@ -17,7 +17,7 @@ class EffSetTaskMaintenance : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(EffSetTaskMaintenance::class.java, "set maintenance of [cloudnet] task %string% to %boolean%")
+            Skript.registerEffect(EffSetTaskMaintenance::class.java, "set maintenance of [(the task|task|cloudnet task|the cloudnet task)] %string% to %boolean%")
         }
     }
 

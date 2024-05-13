@@ -7,26 +7,26 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.CloudServiceProvider
+import eu.cloudnetservice.driver.provider.ServiceTaskProvider
 import org.bukkit.event.Event
 
 
-class ExprAllServicesOnTask : SimpleExpression<String>() {
+class ExprMinServiceCountOfCloudnetTask : SimpleExpression<Number>() {
 
-    private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
+    val serviceTaskProvider = InjectionLayer.ext().instance(ServiceTaskProvider::class.java)
 
     companion object{
         init {
             Skript.registerExpression(
-                ExprAllServicesOnTask::class.java, String::class.java,
-                ExpressionType.SIMPLE, "[(all [[of] the]|the)] [running] cloudnet services on [the] [task] %string%")
+                ExprMinServiceCountOfCloudnetTask::class.java, Number::class.java,
+                ExpressionType.SIMPLE, "(minservicecount|minsercount|msc) of [(the task|task|cloudnet task|the cloudnet task)] %string%")
         }
     }
 
     private var task: Expression<String>? = null
 
     override fun isSingle(): Boolean {
-        return false
+        return true
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -39,20 +39,24 @@ class ExprAllServicesOnTask : SimpleExpression<String>() {
         this.task = exprs[0] as Expression<String>?
         return true
     }
-    override fun get(e: Event?): Array<String>? {
+
+    override fun get(e: Event?): Array<out Number?> {
         val task = this.task?.getSingle(e)
         if (task != null) {
-            return cnServiceProvider.servicesByTask(task).map { it.name() }.toTypedArray()
+            val serviceTask = serviceTaskProvider.serviceTask(task.toString())
+            if (serviceTask != null) {
+                return arrayOf(serviceTask.minServiceCount())
+            }
         }
-        return null
+        return arrayOfNulls(0)
     }
 
-    override fun getReturnType(): Class<out String> {
-        return String::class.java
+    override fun getReturnType(): Class<out Number> {
+        return Number::class.java
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "all cloudnet services on task %string%"
+        return "minservicecount of ${task.toString()}"
     }
 
 }

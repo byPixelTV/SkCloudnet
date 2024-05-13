@@ -16,7 +16,7 @@ class EffStartAllServicesOnTask : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(EffStartAllServicesOnTask::class.java, "start all [cloudnet] services on [the] [task] %string%")
+            Skript.registerEffect(EffStartAllServicesOnTask::class.java, "start all [cloudnet] services on [(the task|task|cloudnet task|the cloudnet task)] %string%")
         }
     }
 

@@ -16,7 +16,7 @@ class EffExecuteCommandOnService : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(EffExecuteCommandOnService::class.java, "execute [cloudnet] command %string% on [cloudnet] service %string%")
+            Skript.registerEffect(EffExecuteCommandOnService::class.java, "execute command %string% on [cloudnet] service %string%")
         }
     }
 

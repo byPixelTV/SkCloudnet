@@ -7,29 +7,27 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.registry.ServiceRegistry
-import eu.cloudnetservice.modules.bridge.player.PlayerManager
+import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
 
-class ExprGetAllCloudnetPlayersOnTask : SimpleExpression<String>() {
+class ExprAllCloudnetServicesOnTask : SimpleExpression<String>() {
 
-    private val serviceRegistry: ServiceRegistry = InjectionLayer.ext().instance(ServiceRegistry::class.java)
-    private val playerManager: PlayerManager = serviceRegistry.firstProvider(PlayerManager::class.java)
+    private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
 
     companion object{
         init {
             Skript.registerExpression(
-                ExprGetAllCloudnetPlayersOnTask::class.java, String::class.java,
-                ExpressionType.SIMPLE, "all [of the] cloudnet players on [(the task|task|cloudnet task|the cloudnet task)] %string%")
+                ExprAllCloudnetServicesOnTask::class.java, String::class.java,
+                ExpressionType.SIMPLE, "[(all [[of] the]|the)] cloudnet services on [(the task|task|cloudnet task|the cloudnet task)] %string%")
         }
     }
+
+    private var task: Expression<String>? = null
 
     override fun isSingle(): Boolean {
         return false
     }
-
-    private var task: Expression<String>? = null
 
     @Suppress("UNCHECKED_CAST")
     override fun init(
@@ -41,10 +39,12 @@ class ExprGetAllCloudnetPlayersOnTask : SimpleExpression<String>() {
         this.task = exprs[0] as Expression<String>?
         return true
     }
-
     override fun get(e: Event?): Array<String>? {
         val task = this.task?.getSingle(e)
-        return task?.let { playerManager.taskOnlinePlayers(it).names().toTypedArray() }
+        if (task != null) {
+            return cnServiceProvider.servicesByTask(task).map { it.name() }.toTypedArray()
+        }
+        return null
     }
 
     override fun getReturnType(): Class<out String> {
@@ -52,7 +52,7 @@ class ExprGetAllCloudnetPlayersOnTask : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "all cloudnet players on task ${this.task?.getSingle(e)}"
+        return "all cloudnet services on task ${this.task?.getSingle(e)}"
     }
 
 }

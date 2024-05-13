@@ -17,7 +17,7 @@ class EffCreateStartedCloudnetServiceWithId : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(EffCreateStartedCloudnetServiceWithId::class.java, "create [a] started [cloudnet] service by [the task] %string% with (the id|id) %number%")
+            Skript.registerEffect(EffCreateStartedCloudnetServiceWithId::class.java, "create [a] started [cloudnet] service by [(the task|task|cloudnet task|the cloudnet task)] %string% with (the id|id) %number%")
         }
     }
 

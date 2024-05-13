@@ -16,7 +16,7 @@ class RestartAllServicesOnTask : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(RestartAllServicesOnTask::class.java, "restart all [cloudnet] services on [the] [task] %string%")
+            Skript.registerEffect(RestartAllServicesOnTask::class.java, "restart all [cloudnet] services on [(the task|task|cloudnet task|the cloudnet task)] %string%")
         }
     }
 

@@ -17,7 +17,7 @@ class EffSetMinServiceCount : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(EffSetMinServiceCount::class.java, "set (minsercount|msc|minservicecount|sercount) of [cloudnet] task %string% to %number%")
+            Skript.registerEffect(EffSetMinServiceCount::class.java, "set (minsercount|msc|minservicecount|sercount) of [(the task|task|cloudnet task|the cloudnet task)] %string% to %number%")
         }
     }
 

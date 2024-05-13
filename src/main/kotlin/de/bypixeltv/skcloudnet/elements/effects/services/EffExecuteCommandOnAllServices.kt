@@ -16,7 +16,7 @@ class EffExecuteCommandOnAllServices : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(EffExecuteCommandOnAllServices::class.java, "execute [cloudnet] command %string% on all services")
+            Skript.registerEffect(EffExecuteCommandOnAllServices::class.java, "execute command %string% on all [cloudnet] services")
         }
     }
 
@@ -34,7 +34,7 @@ class EffExecuteCommandOnAllServices : Effect() {
     }
 
     override fun toString(event: Event?, debug: Boolean): String {
-        return "execute cloudnet command ${commandExpression?.getSingle(event)} on all services"
+        return "execute command ${commandExpression?.getSingle(event)} on all [cloudnet] services"
     }
 
     override fun execute(event: Event?) {

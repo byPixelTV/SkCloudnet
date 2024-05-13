@@ -16,7 +16,7 @@ class EffStopAllServicesOnTask : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(EffStopAllServicesOnTask::class.java, "stop all [cloudnet] services on [the] [task] %string%")
+            Skript.registerEffect(EffStopAllServicesOnTask::class.java, "stop all [cloudnet] services on [(the task|task|cloudnet task|the cloudnet task)] %string%")
         }
     }
 
