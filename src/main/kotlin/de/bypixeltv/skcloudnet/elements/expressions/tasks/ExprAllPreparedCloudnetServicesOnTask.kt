@@ -19,7 +19,7 @@ class ExprAllPreparedCloudnetServicesOnTask : SimpleExpression<String>() {
         init {
             Skript.registerExpression(
                 ExprAllPreparedCloudnetServicesOnTask::class.java, String::class.java,
-                ExpressionType.SIMPLE, "[(all [[of] the]|the)] prepapred cloudnet services on [(the task|task|cloudnet task|the cloudnet task)] %string%")
+                ExpressionType.SIMPLE, "[(all [[of] the]|the)] prepared cloudnet services on [(the task|task|cloudnet task|the cloudnet task)] %string%")
         }
     }
 
