@@ -38,6 +38,7 @@ class ExprGetAllCloudnetPlayers : SimpleExpression<String>() {
     ): Boolean {
         return true
     }
+
     override fun get(e: Event?): Array<String?> {
         return playerManager.onlinePlayers().names().toTypedArray()
     }

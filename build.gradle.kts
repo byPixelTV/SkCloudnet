@@ -1,11 +1,11 @@
 plugins {
-    kotlin("jvm") version "1.9.24"
+    kotlin("jvm") version "2.0.0"
     id("io.papermc.paperweight.userdev") version "1.7.0"
     id("xyz.jpenilla.run-paper") version "1.1.0"
 }
 
 group = "de.bypixeltv"
-version = "1.7.4-beta1"
+version = "1.7.4"
 
 repositories {
     mavenCentral()
@@ -39,7 +39,6 @@ dependencies {
     implementation("eu.cloudnetservice.cloudnet:platform-inject-api:4.0.0-RC10")
     implementation("eu.cloudnetservice.cloudnet:platform-inject-support:4.0.0-RC10")
     implementation("eu.cloudnetservice.cloudnet:common:4.0.0-RC10")
-    implementation("eu.cloudnetservice.cloudnet:node:4.0.0-RC10")
 }
 
 sourceSets {
@@ -63,10 +62,10 @@ tasks {
         options.compilerArgs.add("-Xlint:deprecation")
     }
     compileKotlin {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "21"
     }
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
