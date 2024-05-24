@@ -58,7 +58,7 @@ tasks {
     }
     compileJava {
         options.encoding = "UTF-8"
-        options.release.set(17)
+        options.release.set(21)
         options.compilerArgs.add("-Xlint:deprecation")
     }
     compileKotlin {
