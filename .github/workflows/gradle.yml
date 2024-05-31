@@ -30,29 +30,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Extract version
-        id: extract_version
-        run: echo "VERSION=$(./gradlew properties -q | grep '^version:' | awk '{print $2}')" >> $GITHUB_ENV
-
-      - name: List build/libs directory for debug
-        run: ls -al build/libs
-
-      - name: Rename artifact with version and -dev
-        run: |
-          VERSION=$(echo $VERSION | tr -d '\r')
-          echo "Renaming SkCloudnet*.jar to SkCloudnet-$VERSION-dev.jar"
-          mv build/libs/SkCloudnet*.jar build/libs/SkCloudnet-$VERSION-dev.jar
-        shell: /usr/bin/bash -e {0}
-        env:
-          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.3-9/x64
-          JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.3-9/x64
-          VERSION: ${{ env.VERSION }}
-
-      - name: List build/libs directory for debug after rename
-        run: ls -al build/libs
-
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
         with:
           name: SkCloudnet-Artifact
-          path: build/libs/SkCloudnet-$VERSION-dev.jar
+          path: build/libs/SkCloudnet-dev*.jar
