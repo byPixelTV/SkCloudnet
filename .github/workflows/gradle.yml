@@ -30,8 +30,17 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Extract version
+        id: extract_version
+        run: echo "VERSION=$(./gradlew properties -q | grep '^version:' | awk '{print $2}')" >> $GITHUB_ENV
+
+      - name: Rename artifact with version and -dev
+        run: |
+          VERSION=$(echo $VERSION | tr -d '\r')
+          mv build/libs/SkCloudnet*.jar build/libs/SkCloudnet-$VERSION-dev.jar
+
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
         with:
           name: SkCloudnet-Artifact
-          path: build/libs/SkCloudnet*.jar
+          path: build/libs/SkCloudnet-$VERSION-dev.jar
