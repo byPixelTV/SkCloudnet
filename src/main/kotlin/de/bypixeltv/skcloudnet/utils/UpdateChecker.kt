@@ -11,6 +11,7 @@ import org.bukkit.event.Listener
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import java.net.URI
 import java.net.URL
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
@@ -47,8 +48,8 @@ class UpdateChecker(private val plugin: Main) : Listener {
         fun getLatestReleaseVersion(consumer: Consumer<String>) {
             val miniMessages = MiniMessage.miniMessage()
             try {
-                val url = URL("https://api.github.com/repos/byPixelTV/SkCloudnet/releases/latest")
-                val reader = BufferedReader(InputStreamReader(url.openStream()))
+                val url = URI("https://api.github.com/repos/byPixelTV/SkCloudnet/releases/latest")
+                val reader = BufferedReader(InputStreamReader(url.toURL().openStream()))
                 val jsonObject = Gson().fromJson(reader, JsonObject::class.java)
                 var tagName = jsonObject["tag_name"].asString
                 tagName = tagName.removePrefix("v")

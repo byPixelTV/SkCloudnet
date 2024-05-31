@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.0.0"
-    id("io.papermc.paperweight.userdev") version "1.7.0"
+    id("io.papermc.paperweight.userdev") version "1.7.1"
     id("xyz.jpenilla.run-paper") version "1.1.0"
 }
 
@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT")
     implementation("dev.jorel", "commandapi-bukkit-shade", "9.4.0")
     implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.4.0")
     implementation("net.axay:kspigot:1.20.3")
