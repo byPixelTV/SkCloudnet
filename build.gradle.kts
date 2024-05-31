@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "de.bypixeltv"
-version = "1.7.4"
+version = "1.7.5"
 
 repositories {
     mavenCentral()
@@ -25,7 +25,7 @@ dependencies {
     paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT")
     implementation("dev.jorel", "commandapi-bukkit-shade", "9.4.0")
     implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.4.0")
-    implementation("net.axay:kspigot:1.20.3")
+    implementation("net.axay:kspigot:1.20.4")
 
     implementation("com.github.SkriptLang:Skript:2.9.0-beta1-pre")
 
