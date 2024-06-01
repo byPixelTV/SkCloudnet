@@ -10,6 +10,7 @@ import eu.cloudnetservice.driver.provider.CloudServiceProvider
 import org.bukkit.event.Event
 
 
+@Suppress("UNUSED")
 class CondCloudnetServiceDeleted : Condition() {
 
     val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
@@ -22,6 +23,7 @@ class CondCloudnetServiceDeleted : Condition() {
 
     private var service: Expression<String>? = null
 
+    @Suppress("DEPRECATED_IDENTITY_EQUALS", "UNCHECKED_CAST")
     override fun init(
         expressions: Array<Expression<*>>,
         matchedPattern: Int,
@@ -35,10 +37,10 @@ class CondCloudnetServiceDeleted : Condition() {
 
     override fun check(e: Event?): Boolean {
         val service = service?.getSingle(e) ?: return isNegated
-        if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "DELETED") {
-            return isNegated
+        return if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "DELETED") {
+            isNegated
         } else {
-            return !isNegated
+            !isNegated
         }
     }
 

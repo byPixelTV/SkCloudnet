@@ -5,11 +5,11 @@ api-version: "1.20"
 
 author: "byPixelTV"
 description: "A Skript-Addon to interact with your CloudNet v4 instance."
-website: "https://bypixeltv.me"
+website: "https://bypixeltv.de"
 
 libraries:
-  - "dev.jorel:commandapi-bukkit-shade:9.4.0"
-  - "dev.jorel:commandapi-bukkit-kotlin:9.4.0"
+  - "dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.4.2"
+  - "dev.jorel:commandapi-bukkit-kotlin:9.4.2"
   - "net.axay:kspigot:1.20.4"
 
 depend: [Skript]

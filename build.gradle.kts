@@ -12,6 +12,7 @@ repositories {
     maven("https://jitpack.io")
     maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    maven("https://repo.codemc.org/repository/maven-public/")
     maven {
         name = "papermc"
         url = uri("https://repo.papermc.io/repository/maven-public/")
@@ -23,8 +24,8 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT")
-    implementation("dev.jorel", "commandapi-bukkit-shade", "9.4.0")
-    implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.4.0")
+    implementation("dev.jorel", "commandapi-bukkit-shade-mojang-mapped", "9.4.2")
+    implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.4.2")
     implementation("net.axay:kspigot:1.20.4")
 
     implementation("com.github.SkriptLang:Skript:2.9.0-beta1-pre")
@@ -53,18 +54,19 @@ sourceSets {
 }
 
 tasks {
-    assemble {
-        dependsOn(reobfJar)
-    }
     compileJava {
         options.encoding = "UTF-8"
         options.release.set(21)
         options.compilerArgs.add("-Xlint:deprecation")
     }
-    compileKotlin {
-        kotlinOptions.jvmTarget = "21"
+    named("compileKotlin", org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask::class.java) {
+        compilerOptions {
+            freeCompilerArgs.add("-Xexport-kdoc")
+        }
     }
 }
+
+paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
 
 kotlin {
     jvmToolchain(21)
