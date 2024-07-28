@@ -1,11 +1,10 @@
 plugins {
     kotlin("jvm") version "2.0.0"
     id("io.papermc.paperweight.userdev") version "1.7.1"
-    id("xyz.jpenilla.run-paper") version "1.1.0"
 }
 
 group = "de.bypixeltv"
-version = "1.7.5"
+version = "1.7.6"
 
 repositories {
     mavenCentral()
@@ -23,12 +22,12 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT")
-    implementation("dev.jorel", "commandapi-bukkit-shade-mojang-mapped", "9.4.2")
-    implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.4.2")
+    paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
+    implementation("dev.jorel", "commandapi-bukkit-shade-mojang-mapped", "9.5.1")
+    implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.5.1")
     implementation("net.axay:kspigot:1.20.4")
 
-    implementation("com.github.SkriptLang:Skript:2.9.0-beta1-pre")
+    implementation("com.github.SkriptLang:Skript:2.9.0")
 
 
     implementation("eu.cloudnetservice.cloudnet:syncproxy:4.0.0-RC10")
@@ -58,11 +57,6 @@ tasks {
         options.encoding = "UTF-8"
         options.release.set(21)
         options.compilerArgs.add("-Xlint:deprecation")
-    }
-    named("compileKotlin", org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask::class.java) {
-        compilerOptions {
-            freeCompilerArgs.add("-Xexport-kdoc")
-        }
     }
 }
 

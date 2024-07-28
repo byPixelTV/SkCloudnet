@@ -12,7 +12,6 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URI
-import java.net.URL
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
