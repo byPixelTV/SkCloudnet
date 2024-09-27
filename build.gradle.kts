@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.0.20"
     id("io.papermc.paperweight.userdev") version "1.7.2"
+    id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
 }
 
 group = "de.bypixeltv"
@@ -23,16 +24,34 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
-    implementation("dev.jorel", "commandapi-bukkit-shade-mojang-mapped", "9.5.3")
-    implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.5.3")
-    implementation("net.axay:kspigot:1.21.0")
 
-    implementation("com.github.SkriptLang:Skript:2.9.2")
+    bukkitLibrary(libs.kspigot) {
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
+    bukkitLibrary(libs.commandapi.kotlin) {
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
+    bukkitLibrary(libs.commandapi.shade) {
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
+
+    implementation(libs.skript) {
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
 
 
-    implementation("eu.cloudnetservice.cloudnet:syncproxy:4.0.0-RC10")
-    implementation("eu.cloudnetservice.cloudnet:bridge:4.0.0-RC10")
-    implementation("eu.cloudnetservice.cloudnet:driver:4.0.0-RC10")
+    implementation(libs.cloudnet.driver) {
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
+    implementation(libs.cloudnet.bridge) {
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
+    implementation(libs.cloudnet.wrapper.jvm) {
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
+    implementation(libs.cloudnet.syncproxy) {
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
 }
 
 sourceSets {
@@ -55,6 +74,24 @@ tasks {
 }
 
 paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
+
+bukkit {
+    main = "de.bypixeltv.skcloudnet.Main"
+
+    foliaSupported = false
+
+    apiVersion = "1.21.1"
+
+    authors = listOf("byPixelTV")
+
+    website = "https://bypixeltv.de"
+
+    description = "A Skript-Addon to interact with your CloudNet v4 instance."
+
+    depend = listOf("CloudNet-Bridge", "Skript")
+
+    prefix = "SkCloudnet"
+}
 
 kotlin {
     jvmToolchain(21)
