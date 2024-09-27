@@ -12,7 +12,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             val paperVersion = "1.21.1-R0.1-SNAPSHOT"
-            val jedisVersion = "5.2.0-beta5"
+            val jedisVersion = "5.2.0"
             val kSpigotVersion = "1.21.0"
             val commandAPIVersion = "9.5.3"
             val coroutinesCoreVersion = "1.9.0"
