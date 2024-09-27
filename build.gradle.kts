@@ -24,7 +24,7 @@ repositories {
 dependencies {
     paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
     implementation("dev.jorel", "commandapi-bukkit-shade-mojang-mapped", "9.5.1")
-    implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.5.1")
+    implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.5.3")
     implementation("net.axay:kspigot:1.21.0")
 
     implementation("com.github.SkriptLang:Skript:2.9.2")
