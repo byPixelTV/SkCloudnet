@@ -12,7 +12,6 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             val paperVersion = "1.21.1-R0.1-SNAPSHOT"
-            val jedisVersion = "5.2.0-beta5"
             val kSpigotVersion = "1.21.0"
             val commandAPIVersion = "9.5.3"
             val coroutinesCoreVersion = "1.9.0"
@@ -21,7 +20,6 @@ dependencyResolutionManagement {
             val skriptVersion = "2.9.2"
 
             library("paper", "io.papermc.paper:paper-api:$paperVersion")
-            library("jedis", "redis.clients:jedis:$jedisVersion")
             library("kspigot", "net.axay:kspigot:$kSpigotVersion")
             library("paperweight", "io.papermc.paperweight:paperweight-gradle-plugin:$paperVersion")
             library("commandapi-shade", "dev.jorel:commandapi-bukkit-shade-mojang-mapped:$commandAPIVersion")
