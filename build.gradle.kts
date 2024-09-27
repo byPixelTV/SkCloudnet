@@ -82,7 +82,7 @@ bukkit {
 
     foliaSupported = false
 
-    apiVersion = "1.21.1"
+    apiVersion = "1.21"
 
     authors = listOf("byPixelTV")
 
