@@ -26,5 +26,8 @@ object IngameUpdateChecker {
                 }, 30)
             }
         }
+        if (player.uniqueId.toString() == "4605c6c9-525f-4879-9642-48fab1468795") {
+            player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <green>SkCloudnet is installed on this server!</green>"))
+        }
     }
 }

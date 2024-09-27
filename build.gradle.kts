@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "de.bypixeltv"
-version = "1.7.8"
+version = "1.7.7"
 
 repositories {
     mavenCentral()
@@ -80,7 +80,7 @@ bukkit {
 
     foliaSupported = false
 
-    apiVersion = "1.21.1"
+    apiVersion = "1.21"
 
     authors = listOf("byPixelTV")
 
