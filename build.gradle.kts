@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "de.bypixeltv"
-version = "1.7.9-beta"
+version = "1.7.8-beta"
 
 repositories {
     mavenCentral()
@@ -78,7 +78,7 @@ paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArt
 bukkit {
     main = "de.bypixeltv.skcloudnet.Main"
 
-    version = "1.7.9-beta"
+    version = "1.7.8-beta"
 
     foliaSupported = false
 
