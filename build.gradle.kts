@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "de.bypixeltv"
-version = "1.7.6"
+version = "1.7.8"
 
 repositories {
     mavenCentral()
@@ -22,23 +22,17 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
     implementation("dev.jorel", "commandapi-bukkit-shade-mojang-mapped", "9.5.1")
     implementation("dev.jorel", "commandapi-bukkit-kotlin", "9.5.1")
-    implementation("net.axay:kspigot:1.20.4")
+    implementation("net.axay:kspigot:1.21.0")
 
-    implementation("com.github.SkriptLang:Skript:2.9.0")
+    implementation("com.github.SkriptLang:Skript:2.9.2")
 
 
     implementation("eu.cloudnetservice.cloudnet:syncproxy:4.0.0-RC10")
     implementation("eu.cloudnetservice.cloudnet:bridge:4.0.0-RC10")
     implementation("eu.cloudnetservice.cloudnet:driver:4.0.0-RC10")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-runtime:4.0.0-RC10")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-processor:4.0.0-RC10")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-loader:4.0.0-RC10")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-api:4.0.0-RC10")
-    implementation("eu.cloudnetservice.cloudnet:platform-inject-support:4.0.0-RC10")
-    implementation("eu.cloudnetservice.cloudnet:common:4.0.0-RC10")
 }
 
 sourceSets {

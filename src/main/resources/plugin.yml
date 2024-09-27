@@ -1,6 +1,6 @@
 main: "de.bypixeltv.skcloudnet.Main"
 name: "SkCloudnet"
-version: "1.7.6"
+version: "1.7.8"
 api-version: "1.20"
 
 author: "byPixelTV"
@@ -10,7 +10,6 @@ website: "https://bypixeltv.de"
 libraries:
   - "dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.5.1"
   - "dev.jorel:commandapi-bukkit-kotlin:9.5.1"
-  - "net.axay:kspigot:1.20.4"
+  - "net.axay:kspigot:1.21.0"
 
 depend: [Skript]
-softdepend: [cloudnet-bridge]

@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4.2.1
+        uses: actions/setup-java@v4.3.0
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -33,5 +33,5 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: SkCloudnet-Artifact
+          name: SkCloudnet-Dev-Build
           path: build/libs/SkCloudnet.jar
