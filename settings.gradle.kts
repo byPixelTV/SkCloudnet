@@ -16,7 +16,8 @@ dependencyResolutionManagement {
             val commandAPIVersion = "9.5.3"
             val coroutinesCoreVersion = "1.9.0"
             val jsonVersion = "20240303"
-            val cloudnetVersion = "4.0.0-RC10"
+            val cloudnetVersion = "4.0.0-RC11-SNAPSHOT"
+            val cloudnetBridgeVersion = "4.0.0-RC10"
             val skriptVersion = "2.9.2"
 
             library("paper", "io.papermc.paper:paper-api:$paperVersion")
@@ -26,7 +27,7 @@ dependencyResolutionManagement {
             library("commandapi-kotlin", "dev.jorel:commandapi-bukkit-kotlin:$commandAPIVersion")
             library("coroutines", "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion")
             library("cloudnet-driver", "eu.cloudnetservice.cloudnet:driver:$cloudnetVersion")
-            library("cloudnet-bridge", "eu.cloudnetservice.cloudnet:bridge:$cloudnetVersion")
+            library("cloudnet-bridge", "eu.cloudnetservice.cloudnet:bridge:$cloudnetBridgeVersion")
             library("cloudnet-wrapper-jvm", "eu.cloudnetservice.cloudnet:wrapper-jvm:$cloudnetVersion")
             library("cloudnet-syncproxy", "eu.cloudnetservice.cloudnet:syncproxy:$cloudnetVersion")
             library("json", "org.json:json:$jsonVersion")
