@@ -7,5 +7,4 @@
   "ignoreDeps": [
     "eu.cloudnetservice.cloudnet:.*"
   ],
-  "prhourlylimit": 100
 }
