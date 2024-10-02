@@ -17,7 +17,7 @@ dependencyResolutionManagement {
             val coroutinesCoreVersion = "1.9.0"
             val jsonVersion = "20240303"
             val cloudnetVersion = "4.0.0-RC10"
-            val skriptVersion = "2.9.2"
+            val skriptVersion = "2.9.3"
 
             library("paper", "io.papermc.paper:paper-api:$paperVersion")
             library("kspigot", "net.axay:kspigot:$kSpigotVersion")
