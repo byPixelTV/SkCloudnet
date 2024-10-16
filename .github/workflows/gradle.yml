@@ -34,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SkCloudnet-Dev-Build
-          path: build/libs/SkCloudnet.jar
+          path: build/libs/SkCloudnet*.jar
