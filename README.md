@@ -1,3 +1,6 @@
+# This project is discontinued
+> Due to the lack of motivation and because I dont use Skript anymore, I will stop updating this project.
+
 <div align="center">
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/byPixelTV/SkCloudnet/gradle.yml?style=for-the-badge)
