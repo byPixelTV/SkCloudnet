@@ -13,7 +13,7 @@ dependencyResolutionManagement {
         create("libs") {
             val paperVersion = "1.21.3-R0.1-SNAPSHOT"
             val kSpigotVersion = "1.21.0"
-            val commandAPIVersion = "9.6.0"
+            val commandAPIVersion = "9.6.1"
             val coroutinesCoreVersion = "1.9.0"
             val jsonVersion = "20240303"
             val skriptVersion = "2.9.4"
