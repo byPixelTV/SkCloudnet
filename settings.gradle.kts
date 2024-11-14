@@ -11,13 +11,14 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         create("libs") {
-            val paperVersion = "1.21.1-R0.1-SNAPSHOT"
+            val paperVersion = "1.21.3-R0.1-SNAPSHOT"
             val kSpigotVersion = "1.21.0"
-            val commandAPIVersion = "9.5.3"
+            val commandAPIVersion = "9.6.0"
             val coroutinesCoreVersion = "1.9.0"
             val jsonVersion = "20240303"
-            val cloudnetVersion = "4.0.0-RC10"
-            val skriptVersion = "2.9.2"
+            val skriptVersion = "2.9.4"
+
+            val cloudnetVersion = "4.0.0-RC11.1"
 
             library("paper", "io.papermc.paper:paper-api:$paperVersion")
             library("kspigot", "net.axay:kspigot:$kSpigotVersion")
@@ -25,12 +26,13 @@ dependencyResolutionManagement {
             library("commandapi-shade", "dev.jorel:commandapi-bukkit-shade-mojang-mapped:$commandAPIVersion")
             library("commandapi-kotlin", "dev.jorel:commandapi-bukkit-kotlin:$commandAPIVersion")
             library("coroutines", "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion")
-            library("cloudnet-driver", "eu.cloudnetservice.cloudnet:driver:$cloudnetVersion")
-            library("cloudnet-bridge", "eu.cloudnetservice.cloudnet:bridge:$cloudnetVersion")
-            library("cloudnet-wrapper-jvm", "eu.cloudnetservice.cloudnet:wrapper-jvm:$cloudnetVersion")
-            library("cloudnet-syncproxy", "eu.cloudnetservice.cloudnet:syncproxy:$cloudnetVersion")
             library("json", "org.json:json:$jsonVersion")
             library("skript", "com.github.SkriptLang:Skript:$skriptVersion")
+
+            library("cloudnet-driver", "eu.cloudnetservice.cloudnet:driver:$cloudnetVersion")
+            library("cloudnet-bridge", "eu.cloudnetservice.cloudnet:bridge:4.0.0-RC10")
+            library("cloudnet-wrapper-jvm", "eu.cloudnetservice.cloudnet:wrapper-jvm:$cloudnetVersion")
+            library("cloudnet-syncproxy", "eu.cloudnetservice.cloudnet:syncproxy:$cloudnetVersion")
         }
     }
 }

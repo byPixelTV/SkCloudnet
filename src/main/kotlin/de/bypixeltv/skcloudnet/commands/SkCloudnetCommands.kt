@@ -4,33 +4,24 @@ import ch.njol.skript.Skript
 import ch.njol.skript.util.Version
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.tcoded.folialib.FoliaLib
 import de.bypixeltv.skcloudnet.Main
 import de.bypixeltv.skcloudnet.utils.UpdateChecker
 import de.bypixeltv.skcloudnet.utils.UpdateChecker.Companion.getLatestReleaseVersion
-import dev.jorel.commandapi.arguments.ArgumentSuggestions
-import dev.jorel.commandapi.kotlindsl.*
-import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.registry.ServiceRegistry
-import eu.cloudnetservice.modules.bridge.node.player.NodePlayerManager
-import eu.cloudnetservice.modules.bridge.player.CloudPlayer
-import eu.cloudnetservice.modules.bridge.player.PlayerManager
-import eu.cloudnetservice.modules.bridge.player.executor.PlayerExecutor
-import net.axay.kspigot.chat.literalText
-import net.axay.kspigot.extensions.onlinePlayers
+import dev.jorel.commandapi.kotlindsl.anyExecutor
+import dev.jorel.commandapi.kotlindsl.commandTree
+import dev.jorel.commandapi.kotlindsl.literalArgument
 import net.kyori.adventure.text.minimessage.MiniMessage
-import org.bukkit.Bukkit
-import org.bukkit.entity.Player
 import java.io.BufferedReader
-import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.*
-import kotlin.jvm.optionals.getOrNull
 
 class SkCloudnetCommands {
     private val miniMessages = MiniMessage.miniMessage()
+
+    private val foliaLib = FoliaLib(Main.INSTANCE)
 
     @Suppress("UNUSED", "DEPRECATION")
     val command = commandTree("skcloudnet") {
@@ -80,10 +71,10 @@ class SkCloudnetCommands {
                     val jsonObject = Gson().fromJson(reader, JsonObject::class.java)
                     var tagName = jsonObject["tag_name"].asString
                     tagName = tagName.removePrefix("v")
-                    if (curVer.compareTo(plugVer) <= 0) {
+                    if (curVer <= plugVer) {
                         player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> <green>The plugin is up to date!</green>"))
                     } else {
-                        Bukkit.getScheduler().runTaskLater(Main.INSTANCE, Runnable {
+                        foliaLib.scheduler.runLater(Runnable {
                             updateVersion.thenApply { version ->
                                 player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> update available: <green>$version</green>"))
                                 player.sendMessage(miniMessages.deserialize("<dark_grey>[<gradient:aqua:blue:aqua>SkCloudnet</gradient>]</dark_grey> download at <aqua><click:open_url:'https://github.com/byPixelTV/SkCloudnet/releases'>https://github.com/byPixelTV/SkCloudnet/releases</click></aqua>"))

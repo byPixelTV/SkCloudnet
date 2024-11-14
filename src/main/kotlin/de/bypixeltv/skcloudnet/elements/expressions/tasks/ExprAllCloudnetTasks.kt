@@ -37,8 +37,10 @@ class ExprAllCloudnetTasks : SimpleExpression<String>() {
     }
 
     override fun get(e: Event?): Array<String?> {
-        val tasks = serviceTaskProvider.serviceTasksAsync()
-        return tasks.get().map { it.name() }.toTypedArray()
+        val tasksFuture = serviceTaskProvider.serviceTasksAsync()
+        return tasksFuture.thenApply { tasks ->
+            tasks.map { it.name() as String? }.toTypedArray()
+        }.get()
     }
 
     override fun getReturnType(): Class<out String> {

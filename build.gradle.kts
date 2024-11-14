@@ -1,18 +1,18 @@
 plugins {
-    kotlin("jvm") version "2.0.20"
-    id("io.papermc.paperweight.userdev") version "1.7.2"
+    kotlin("jvm") version "2.0.21"
+    id("io.papermc.paperweight.userdev") version "1.7.4"
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
+    id("com.gradleup.shadow") version "8.3.5"
 }
 
+val versionString = "1.7.8"
+
 group = "de.bypixeltv"
-version = "1.7.7"
+version = versionString
 
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
-    maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://repo.codemc.org/repository/maven-public/")
     maven {
         name = "papermc"
         url = uri("https://repo.papermc.io/repository/maven-public/")
@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT")
 
     bukkitLibrary(libs.kspigot) {
         exclude(group = "org.bukkit", module = "bukkit")
@@ -35,21 +35,22 @@ dependencies {
         exclude(group = "org.bukkit", module = "bukkit")
     }
 
-    implementation(libs.skript) {
+    compileOnly(libs.skript) {
         exclude(group = "org.bukkit", module = "bukkit")
     }
 
+    implementation("com.github.technicallycoded:FoliaLib:main-SNAPSHOT")
 
-    implementation(libs.cloudnet.driver) {
+    compileOnly(libs.cloudnet.driver) {
         exclude(group = "org.bukkit", module = "bukkit")
     }
-    implementation(libs.cloudnet.bridge) {
+    compileOnly(libs.cloudnet.bridge) {
         exclude(group = "org.bukkit", module = "bukkit")
     }
-    implementation(libs.cloudnet.wrapper.jvm) {
+    compileOnly(libs.cloudnet.wrapper.jvm) {
         exclude(group = "org.bukkit", module = "bukkit")
     }
-    implementation(libs.cloudnet.syncproxy) {
+    compileOnly(libs.cloudnet.syncproxy) {
         exclude(group = "org.bukkit", module = "bukkit")
     }
 }
@@ -69,7 +70,13 @@ tasks {
     compileJava {
         options.encoding = "UTF-8"
         options.release.set(21)
-        options.compilerArgs.add("-Xlint:deprecation")
+    }
+
+    shadowJar {
+        relocate("com.tcoded.folialib", "de.bypixeltv.skcloudnet.lib.folialib")
+        archiveBaseName.set("SkCloudnet")
+        archiveVersion.set(version.toString())
+        archiveClassifier.set("")
     }
 }
 
@@ -78,7 +85,9 @@ paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArt
 bukkit {
     main = "de.bypixeltv.skcloudnet.Main"
 
-    foliaSupported = false
+    version = versionString
+
+    foliaSupported = true
 
     apiVersion = "1.21"
 

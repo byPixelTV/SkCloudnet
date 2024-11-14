@@ -10,7 +10,7 @@
 <br clear="both">
 
 <h1 align="center">This is SkCloudnet</h2>
-<h2 align="center">A Skript-Addon to interact with your CloudNet v4 instance!</h2>
+<h2 align="center">A Skript-Addon (for PaperMC servers) to interact with your CloudNet v4 instance!</h2>
 
 <br clear="both">
 
