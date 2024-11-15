@@ -5,7 +5,7 @@ plugins {
     id("com.gradleup.shadow") version "8.3.5"
 }
 
-val versionString = "1.7.8"
+val versionString = "1.7.7"
 
 group = "de.bypixeltv"
 version = versionString
