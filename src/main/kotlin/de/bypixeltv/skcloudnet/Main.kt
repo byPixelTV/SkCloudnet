@@ -20,13 +20,19 @@ class Main : KSpigot() {
 
     companion object {
         lateinit var INSTANCE: Main
+            private set
+    }
+
+    override fun load() {
+        INSTANCE = this
+        CommandAPI.onLoad(CommandAPIBukkitConfig(this).silentLogs(true).verboseOutput(true))
+        SkCloudnetCommands()
     }
 
     @Suppress("DEPRECATION")
     override fun startup() {
         saveDefaultConfig()
 
-        INSTANCE = this
         this.instance = this
         this.addon = Skript.registerAddon(this)
         val localAddon = this.addon
@@ -69,11 +75,6 @@ class Main : KSpigot() {
             server.consoleSender.sendMessage(miniMessages.deserialize("<red>CloudNet-Bridge is not installed, please install it to use SkCloudnet</red>"))
             server.pluginManager.disablePlugin(this)
         }
-    }
-
-    override fun load() {
-        CommandAPI.onLoad(CommandAPIBukkitConfig(this).silentLogs(true).verboseOutput(true))
-        SkCloudnetCommands()
     }
 
     @Suppress("DEPRECATION")
