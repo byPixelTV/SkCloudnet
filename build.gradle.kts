@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.0.21"
-    id("io.papermc.paperweight.userdev") version "1.7.4"
+    id("io.papermc.paperweight.userdev") version "1.7.5"
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
     id("com.gradleup.shadow") version "8.3.5"
 }
