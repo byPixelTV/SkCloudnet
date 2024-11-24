@@ -42,17 +42,6 @@ class Main : KSpigot() {
             e.printStackTrace()
         }
 
-        server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00> _____  _     _____  _                    _               _  </color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>/  ___|| |   /  __ \\| |                  | |             | | </color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>\\ `--. | | __| /  \\/| |  ___   _   _   __| | _ __    ___ | |_</color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00> `--. \\| |/ /| |    | | / _ \\ | | | | / _` || '_ \\  / _ \\| __|</color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>/\\__/ /|   < | \\__/\\| || (_) || |_| || (_| || | | ||  __/| |_ </color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#43fa00>\\____/ |_|\\_\\ \\____/|_| \\___/  \\__,_| \\__,_||_| |_| \\___| \\__|</color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<yellow>Made by byPixelTV</yellow>"))
-        server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(" ")
         server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <aqua>Successfully enabled SkCloudnet v${this.description.version}!</aqua>"))
 
         IngameUpdateChecker
@@ -80,17 +69,5 @@ class Main : KSpigot() {
     @Suppress("DEPRECATION")
     override fun shutdown() {
         CommandAPI.onDisable()
-        server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000> _____  _     _____  _                    _               _  </color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>/  ___|| |   /  __ \\| |                  | |             | | </color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>\\ `--. | | __| /  \\/| |  ___   _   _   __| | _ __    ___ | |_</color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000> `--. \\| |/ /| |    | | / _ \\ | | | | / _` || '_ \\  / _ \\| __|</color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>/\\__/ /|   < | \\__/\\| || (_) || |_| || (_| || | | ||  __/| |_ </color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<color:#ff0000>\\____/ |_|\\_\\ \\____/|_| \\___/  \\__,_| \\__,_||_| |_| \\___| \\__|</color>"))
-        server.consoleSender.sendMessage(miniMessages.deserialize("<yellow>Made by byPixelTV</yellow>"))
-        server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(" ")
-        server.consoleSender.sendMessage(miniMessages.deserialize("<grey>[<aqua>SkCloudnet</aqua>]</grey> <aqua>Successfully disabled SkCloudnet v${this.description.version}!</aqua>"))
     }
 }
