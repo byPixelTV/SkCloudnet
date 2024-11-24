@@ -93,7 +93,7 @@ bukkit {
 
     authors = listOf("byPixelTV")
 
-    website = "https://bypixeltv.de"
+    website = "https://github.com/byPixelTV/SkCloudnet"
 
     description = "A Skript-Addon to interact with your CloudNet v4 instance."
 
