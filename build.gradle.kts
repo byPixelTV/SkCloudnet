@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.0.21"
-    id("io.papermc.paperweight.userdev") version "1.7.4"
+    kotlin("jvm") version "2.1.0"
+    id("io.papermc.paperweight.userdev") version "1.7.7"
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
     id("com.gradleup.shadow") version "8.3.5"
 }
@@ -93,7 +93,7 @@ bukkit {
 
     authors = listOf("byPixelTV")
 
-    website = "https://bypixeltv.de"
+    website = "https://github.com/byPixelTV/SkCloudnet"
 
     description = "A Skript-Addon to interact with your CloudNet v4 instance."
 
