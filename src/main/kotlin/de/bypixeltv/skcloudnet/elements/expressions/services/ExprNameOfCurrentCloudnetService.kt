@@ -7,24 +7,22 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import eu.cloudnetservice.driver.inject.InjectionLayer
-import eu.cloudnetservice.driver.provider.CloudServiceProvider
+import eu.cloudnetservice.wrapper.holder.ServiceInfoHolder
 import org.bukkit.event.Event
 
-
-class ExprAllCloudnetServices : SimpleExpression<String>() {
-
-    private val cnServiceProvider: CloudServiceProvider = InjectionLayer.ext().instance(CloudServiceProvider::class.java)
+class ExprNameOfCurrentCloudnetService: SimpleExpression<String>() {
+    private val serviceInfoHolder: ServiceInfoHolder = InjectionLayer.ext().instance(ServiceInfoHolder::class.java)
 
     companion object{
         init {
             Skript.registerExpression(
                 ExprAllCloudnetServices::class.java, String::class.java,
-                ExpressionType.SIMPLE, "[(all [[of] the]|the)] [cloudnet] services")
+                ExpressionType.SIMPLE, "name of [current] (cloudnet|cloud) service")
         }
     }
 
     override fun isSingle(): Boolean {
-        return false
+        return true
     }
 
     override fun init(
@@ -37,7 +35,7 @@ class ExprAllCloudnetServices : SimpleExpression<String>() {
     }
 
     override fun get(e: Event?): Array<String?> {
-        return cnServiceProvider.services().map { it.name() }.toTypedArray()
+        return arrayOf(serviceInfoHolder.serviceInfo().name())
     }
 
     override fun getReturnType(): Class<out String> {
@@ -45,6 +43,6 @@ class ExprAllCloudnetServices : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "all cloudnet services"
+        return "name of current cloudnet service"
     }
 }
