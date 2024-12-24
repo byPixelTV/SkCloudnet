@@ -14,7 +14,7 @@ dependencyResolutionManagement {
             val paperVersion = "1.21.3-R0.1-SNAPSHOT"
             val kSpigotVersion = "1.21.0"
             val commandAPIVersion = "9.7.0"
-            val coroutinesCoreVersion = "1.10.0"
+            val coroutinesCoreVersion = "1.10.1"
             val jsonVersion = "20240303"
             val skriptVersion = "2.9.5"
 
