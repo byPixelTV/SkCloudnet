@@ -1,11 +1,13 @@
 <div align="center">
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/byPixelTV/SkCloudnet/gradle.yml?style=for-the-badge)
-![GitHub issues](https://img.shields.io/github/issues-raw/byPixelTV/RediVelocity?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues-raw/byPixelTV/SkCloudnet?style=for-the-badge)
 ![GitHub All Downloads](https://img.shields.io/github/downloads/byPixelTV/SkCloudnet/total?style=for-the-badge)
+<br>
+[![CodeFactor](https://www.codefactor.io/repository/github/bypixeltv/skcloudnet/badge)](https://www.codefactor.io/repository/github/bypixeltv/skcloudnet)
+![](https://sloc.xyz/github/byPixelTV/SkCloudnet)
 
 </div>
-
 
 <br clear="both">
 
