@@ -16,7 +16,7 @@ class EffExecuteCommandOnTask : Effect() {
 
     companion object{
         init {
-            Skript.registerEffect(RestartAllServicesOnTask::class.java, "execute command %string% on [(the task|task|cloudnet task|the cloudnet task)] %string%")
+            Skript.registerEffect(EffExecuteCommandOnTask::class.java, "execute command %string% on [(the task|task|cloudnet task|the cloudnet task)] %string%")
         }
     }
 

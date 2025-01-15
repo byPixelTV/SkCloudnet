@@ -5,7 +5,7 @@ plugins {
     id("com.gradleup.shadow") version "8.3.5"
 }
 
-val versionString = "1.7.7"
+val versionString = "1.7.8-Beta"
 
 group = "de.bypixeltv"
 version = versionString
@@ -41,18 +41,8 @@ dependencies {
 
     implementation("com.github.technicallycoded:FoliaLib:main-SNAPSHOT")
 
-    compileOnly(libs.cloudnet.driver) {
-        exclude(group = "org.bukkit", module = "bukkit")
-    }
-    compileOnly(libs.cloudnet.bridge) {
-        exclude(group = "org.bukkit", module = "bukkit")
-    }
-    compileOnly(libs.cloudnet.wrapper.jvm) {
-        exclude(group = "org.bukkit", module = "bukkit")
-    }
-    compileOnly(libs.cloudnet.syncproxy) {
-        exclude(group = "org.bukkit", module = "bukkit")
-    }
+    compileOnly(libs.cloudnet.driver)
+    compileOnly(libs.cloudnet.bridge)
 }
 
 sourceSets {
@@ -69,7 +59,7 @@ sourceSets {
 tasks {
     compileJava {
         options.encoding = "UTF-8"
-        options.release.set(21)
+        options.release.set(23)
     }
 
     shadowJar {
@@ -103,5 +93,5 @@ bukkit {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(23)
 }
