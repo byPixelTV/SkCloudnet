@@ -22,6 +22,7 @@ class CondCloudnetServiceStopping : Condition() {
 
     private var service: Expression<String>? = null
 
+    @Suppress("UNCHECKED_CAST")
     override fun init(
         expressions: Array<Expression<*>>,
         matchedPattern: Int,
@@ -29,7 +30,7 @@ class CondCloudnetServiceStopping : Condition() {
         parser: SkriptParser.ParseResult
     ): Boolean {
         this.service = expressions[0] as Expression<String>?
-        isNegated = parser.mark === 1
+        isNegated = parser.mark == 1
         return true
     }
 

@@ -43,6 +43,7 @@ dependencies {
 
     compileOnly(libs.cloudnet.driver)
     compileOnly(libs.cloudnet.bridge)
+    compileOnly(libs.cloudnet.wrapper.jvm)
 }
 
 sourceSets {

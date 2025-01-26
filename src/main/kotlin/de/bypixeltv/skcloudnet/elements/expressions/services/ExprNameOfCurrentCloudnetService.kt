@@ -16,7 +16,7 @@ class ExprNameOfCurrentCloudnetService: SimpleExpression<String>() {
     companion object{
         init {
             Skript.registerExpression(
-                ExprAllCloudnetServices::class.java, String::class.java,
+                ExprNameOfCurrentCloudnetService::class.java, String::class.java,
                 ExpressionType.SIMPLE, "name of [current] (cloudnet|cloud) service")
         }
     }

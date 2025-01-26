@@ -22,6 +22,7 @@ class CondCloudnetServicePrepared : Condition() {
 
     private var service: Expression<String>? = null
 
+    @Suppress("UNCHECKED_CAST")
     override fun init(
         expressions: Array<Expression<*>>,
         matchedPattern: Int,
@@ -29,16 +30,16 @@ class CondCloudnetServicePrepared : Condition() {
         parser: SkriptParser.ParseResult
     ): Boolean {
         this.service = expressions[0] as Expression<String>?
-        isNegated = parser.mark === 1
+        isNegated = parser.mark == 1
         return true
     }
 
     override fun check(e: Event?): Boolean {
         val service = service?.getSingle(e) ?: return isNegated
-        if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "PREPARED") {
-            return isNegated
+        return if (cnServiceProvider.serviceByName(service)?.lifeCycle()?.name == "PREPARED") {
+            isNegated
         } else {
-            return !isNegated
+            !isNegated
         }
     }
 

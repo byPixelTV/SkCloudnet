@@ -22,6 +22,7 @@ class CondTaskInMaintenance : Condition() {
 
     private var task: Expression<String>? = null
 
+    @Suppress("UNCHECKED_CAST")
     override fun init(
         expressions: Array<Expression<*>>,
         matchedPattern: Int,
@@ -29,7 +30,7 @@ class CondTaskInMaintenance : Condition() {
         parser: SkriptParser.ParseResult
     ): Boolean {
         this.task = expressions[0] as Expression<String>?
-        isNegated = parser.mark === 1
+        isNegated = parser.mark == 1
         return true
     }
     override fun check(e: Event?): Boolean {
