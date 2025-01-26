@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.1.0"
-    id("io.papermc.paperweight.userdev") version "1.7.7"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.14"
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
     id("com.gradleup.shadow") version "8.3.5"
 }
@@ -23,21 +23,13 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
 
-    bukkitLibrary(libs.kspigot) {
-        exclude(group = "org.bukkit", module = "bukkit")
-    }
-    bukkitLibrary(libs.commandapi.kotlin) {
-        exclude(group = "org.bukkit", module = "bukkit")
-    }
-    bukkitLibrary(libs.commandapi.shade) {
-        exclude(group = "org.bukkit", module = "bukkit")
-    }
+    bukkitLibrary(libs.kspigot)
+    bukkitLibrary(libs.commandapi.kotlin)
+    bukkitLibrary(libs.commandapi.shade)
 
-    compileOnly(libs.skript) {
-        exclude(group = "org.bukkit", module = "bukkit")
-    }
+    compileOnly(libs.skript)
 
     implementation("com.github.technicallycoded:FoliaLib:main-SNAPSHOT")
 

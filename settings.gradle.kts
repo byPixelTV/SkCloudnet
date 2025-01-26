@@ -11,14 +11,14 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         create("libs") {
-            val paperVersion = "1.21.3-R0.1-SNAPSHOT"
+            val paperVersion = "1.21.4-R0.1-SNAPSHOT"
             val kSpigotVersion = "1.21.0"
             val commandAPIVersion = "9.7.0"
             val coroutinesCoreVersion = "1.10.1"
             val jsonVersion = "20250107"
             val skriptVersion = "2.10.0"
 
-            val cloudnetVersion = "4.0.0-RC11.1"
+            val cloudnetVersion = "4.0.0-RC11.2"
 
             library("paper", "io.papermc.paper:paper-api:$paperVersion")
             library("kspigot", "net.axay:kspigot:$kSpigotVersion")
