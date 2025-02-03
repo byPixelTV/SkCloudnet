@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "2.1.10"
     id("io.papermc.paperweight.userdev") version "2.0.0-SNAPSHOT"
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
-    id("com.gradleup.shadow") version "8.3.5"
+    id("com.gradleup.shadow") version "8.3.6"
 }
 
 val versionString = "1.7.8-Beta"
