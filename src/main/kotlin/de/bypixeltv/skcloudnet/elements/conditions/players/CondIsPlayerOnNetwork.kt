@@ -47,12 +47,12 @@ class CondIsPlayerOnNetwork : Condition() {
         if (uuidMatchResult != null) {
             val uuidString = uuidMatchResult.value
             val uuid = UUID.fromString(uuidString)
-            if (playerManager.onlinePlayer(uuid) != null) {
+            return if (playerManager.onlinePlayer(uuid) != null) {
                 // Player is online
-                return isNegated
+                isNegated
             } else {
                 // Player is not online
-                return !isNegated
+                !isNegated
             }
         } else {
             Main.INSTANCE.server.consoleSender.sendMessage("No valid UUID found in your Syntax.")
