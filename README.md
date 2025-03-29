@@ -1,6 +1,6 @@
 <div align="center">
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/byPixelTV/SkCloudnet/gradle.yml?style=for-the-badge)
+![Jenkins Build](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.bypixeltv.de%2Fjob%2Fskcloudnet%2F&style=for-the-badge)
 ![GitHub issues](https://img.shields.io/github/issues-raw/byPixelTV/SkCloudnet?style=for-the-badge)
 ![GitHub All Downloads](https://img.shields.io/github/downloads/byPixelTV/SkCloudnet/total?style=for-the-badge)
 <br>
