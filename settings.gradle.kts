@@ -16,7 +16,7 @@ dependencyResolutionManagement {
             val commandAPIVersion = "10.0.1"
             val coroutinesCoreVersion = "1.10.2"
             val jsonVersion = "20250517"
-            val skriptVersion = "2.11.1"
+            val skriptVersion = "2.11.2"
 
             val cloudnetVersion = "4.0.0-RC11.2"
 
